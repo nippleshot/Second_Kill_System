@@ -11,14 +11,14 @@ public class User implements Serializable {
 
     private String password; // 密码
 
-    private int privilege; // 权限
+    private int privilege; // 权限，1为管理员，0为普通用户
 
     private double balance; // 余额
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.privilege = 1;
+        this.privilege = 0;
         this.balance = 0;
     }
 
