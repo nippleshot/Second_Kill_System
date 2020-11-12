@@ -1,6 +1,7 @@
 package com.example.web;
 
 import com.example.domain.Product;
+import com.example.domain.User;
 import com.example.service.ProductService;
 
 import com.example.service.UserService;
@@ -37,18 +38,18 @@ public class MainListController {
         return "mainInit";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String mainList_user(@RequestParam(value = "userId") String user,Model model) {
+    @RequestMapping(value = "/list/user", method = RequestMethod.GET)
+    public String mainList_user(HttpServletRequest request, Model model) {
         model.addAttribute("allProduct",productService.getAllProducts());
-        model.addAttribute("user",userService.findUserByUserName(user));
+        model.addAttribute("user", request.getParameter("user"));
 
         return "mainUser";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String mainList_manager(@RequestParam(value = "managerId") String user,Model model) {
+    @RequestMapping(value = "/list/manager", method = RequestMethod.GET)
+    public String mainList_manager(HttpServletRequest request,Model model) {
         model.addAttribute("allProduct",productService.getAllProducts());
-        model.addAttribute("manager",userService.findUserByUserName(user));
+        model.addAttribute("manager", request.getParameter("manager"));
 
         return "mainManager";
     }
