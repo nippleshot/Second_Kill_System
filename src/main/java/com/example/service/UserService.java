@@ -25,6 +25,10 @@ public class UserService {
         return userDao.findUserByUserName(userName);
     }
 
+    public User findUserByUserId(int userId) {
+        return userDao.findUserById(userId);
+    }
+
     /**
      * 注册
      */
