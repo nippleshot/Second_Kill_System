@@ -23,12 +23,10 @@ import java.util.List;
 public class MainListController {
 
     private ProductService productService;
-    private UserService userService;
 
     @Autowired
-    public MainListController(ProductService productService, UserService userService) {
+    public MainListController(ProductService productService) {
         this.productService = productService;
-        this.userService = userService;
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -41,7 +39,7 @@ public class MainListController {
     @RequestMapping(value = "/list/user", method = RequestMethod.GET)
     public String mainList_user(HttpServletRequest request, Model model) {
         model.addAttribute("allProduct",productService.getAllProducts());
-        model.addAttribute("user", request.getParameter("user"));
+        model.addAttribute("user", request.getParameter("user"));  // UserDao
 
         return "mainUser";
     }

@@ -1,6 +1,7 @@
 package com.example.web;
 
 import com.example.domain.Order;
+import com.example.domain.User;
 import com.example.service.OrderService;
 import com.example.service.ProductService;
 import com.example.service.UserService;
@@ -22,15 +23,17 @@ public class OrderController {
 
     OrderService orderService;
     ProductService productService;
+    UserService userService;
 
     private static final String SUCCESS_MSG = "购买成功";
     private static final String PAYMENT_ERROR = "您的余额不够的";
     private static final String PRODUCT_STOCK_ERROR = "该产品数量不够的";
 
     @Autowired
-    public OrderController(OrderService orderService, ProductService productService) {
+    public OrderController(OrderService orderService, ProductService productService, UserService userService) {
         this.orderService = orderService;
         this.productService = productService;
+        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -52,8 +55,18 @@ public class OrderController {
         Date date = new Date();
 
         int is_Create_Succ = orderService.createNewOrder(user_id, product_id, num, total_price, consignee, telephone, address, date);
+
         if(is_Create_Succ == OrderService.SUCCESS_CREATE_ORDER){
-            // int is_Payment_Succ = orderService.payForOrder(user_id, )
+            Order new_Order =  orderService.findOrderByUserIdAndCreateTime(user_id, date);
+            int is_Payment_Succ = orderService.payForOrder(user_id, new_Order.getOrderId());
+            if(is_Payment_Succ == OrderService.BALANCE_NOT_ADEQUATE){
+
+                return "redirect:/order?";
+            }else{
+                User user = ;
+                redirect.addAttribute("user", user);
+                return "redirect:/main/list/user";
+            }
         }else{
 
         }
