@@ -25,12 +25,12 @@ public class OrderService {
     private UserDao userDao;
 
     /* 订单创建结果 */
-    public final int SUCCESS_CREATE_ORDER = 100;
-    public final int STOCK_NOT_ADEQUATE = 101;
+    public static final int SUCCESS_CREATE_ORDER = 100;
+    public static final int STOCK_NOT_ADEQUATE = 101;
 
     /* 支付结果 */
-    public final int SUCCESS_PAID = 200;
-    public final int BALANCE_NOT_ADEQUATE = 201;
+    public static final int SUCCESS_PAID = 200;
+    public static final int BALANCE_NOT_ADEQUATE = 201;
 
     /**
      * 创建新订单

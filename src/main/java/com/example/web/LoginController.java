@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class LoginController {
 
@@ -28,9 +30,13 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String check_Login(@RequestParam(value ="userId") String id, @RequestParam(value ="password") String password, RedirectAttributes redirect) {
+    public String check_Login(HttpServletRequest request, RedirectAttributes redirect) {
+        String id = request.getParameter("userName");
+        String password = request.getParameter("password");
+
         if(userService.hasMatchUser(id, password)){
             User user = userService.findUserByUserName(id);
+
             if(user.getPrivilege() == 1){
                 redirect.addAttribute("manager", user);
                 return "redirect:/main/list/manager";
@@ -47,10 +53,17 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(Model model) {
+    public String register(HttpServletRequest request, RedirectAttributes redirect) {
+        String id = request.getParameter("userName");
+        String password = request.getParameter("password");
+        // register user (No Error)
+        userService.register(id, password);
 
+        User user = userService.findUserByUserName(id);
 
-        return "redirect:/main/list";
+        // redirect immediately to main/list
+        redirect.addAttribute("user", user);
+        return "redirect:/main/list/user";
     }
 
 

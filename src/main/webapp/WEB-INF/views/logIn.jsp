@@ -75,15 +75,8 @@
             <div class="sign-up" id="sign-up-info">
                 <h1>账号注册</h1>
                 <form id="sign-up-form">
-                    <input type="text" placeholder="姓名"/>
                     <input type="text" placeholder="账号名"/>
                     <input type="password" placeholder="密码"/>
-                    <select>
-                        <option value="">请选择您的身份</option>
-                        <option value="">用户</option>
-                        <option value="">管理者</option>
-                    </select>
-
                     <button class="control-button up">注册</button>
                 </form>
             </div>
