@@ -24,9 +24,14 @@ public class OrderDao {
         return jdbcTemplate.queryForList(sqlStr, new Object[]{userId, productId}, Order.class);
     }
 
-    public Order findOrderByUserIdAndTime(int userId, Date time) {
-        String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND time=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, time}, Order.class);
+    public Order findOrderByUserIdAndTime(int userId, Date createTime) {
+        String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND create_time=?";
+        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, createTime}, Order.class);
+    }
+
+    public List<Order> findAllCompletedOrder() {
+        String sqlStr = "SELECT * FROM t_order WHERE is_paid=true";
+        return jdbcTemplate.queryForList(sqlStr, Order.class);
     }
 
     public Order findOrderByOrderId(int orderId) {
