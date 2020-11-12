@@ -67,4 +67,11 @@ public class OrderService {
         return orderDao.findAllCompletedOrder();
     }
 
+    /**
+     * 根据用户id和订单创建时间获取订单
+     */
+    public Order findOrderByUserIdAndCreateTime(int userId, Date createTime) {
+        return orderDao.findOrderByUserIdAndTime(userId, createTime);
+    }
+
 }
