@@ -21,6 +21,7 @@
      -->
 </head>
 <script>
-    window.location.href = "<c:url value="/admin/login.html" />";
+    <!--localhost:8008/mxst root ??? ???? ??? ?? url? ???? ?? ?? Controller? ???-->
+    window.location.href = "<c:url value="/main/list.html" />";
 </script>
 </html>

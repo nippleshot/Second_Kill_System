@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/main")
@@ -38,16 +40,23 @@ public class MainListController {
 
     @RequestMapping(value = "/list/user", method = RequestMethod.GET)
     public String mainList_user(HttpServletRequest request, Model model) {
+        model.addAttribute("userId", request.getParameter("userId"));
+        model.addAttribute("userName", request.getParameter("userName"));
+        model.addAttribute("userBalance", request.getParameter("userBalance"));
         model.addAttribute("allProduct",productService.getAllProducts());
-        model.addAttribute("user", request.getParameter("user"));  // UserDao
-
         return "mainUser";
     }
 
     @RequestMapping(value = "/list/manager", method = RequestMethod.GET)
     public String mainList_manager(HttpServletRequest request,Model model) {
+
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        if(null != inputFlashMap) {
+            User member = (User)inputFlashMap.get("manager");
+            model.addAttribute("managerId", member.getUserId());
+            model.addAttribute("managerName", member.getUserName());
+        }
         model.addAttribute("allProduct",productService.getAllProducts());
-        model.addAttribute("manager", request.getParameter("manager"));
 
         return "mainManager";
     }

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/order")
@@ -44,6 +45,7 @@ public class OrderController {
         return "order";
     }
 
+    // 잘못함 HttpServletRequest로 받으면 안됨 Order로 받아야되
     @RequestMapping(method = RequestMethod.POST)
     public String make_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, HttpServletRequest request, RedirectAttributes redirect) {
 
@@ -60,26 +62,27 @@ public class OrderController {
             Order new_Order =  orderService.findOrderByUserIdAndCreateTime(user_id, date);
             int is_Payment_Succ = orderService.payForOrder(user_id, new_Order.getOrderId());
             if(is_Payment_Succ == OrderService.BALANCE_NOT_ADEQUATE){
-
-                return "redirect:/order?";
+                // PAYMENT_ERROR
+                return "redirect:/order?userId="+user_id+"&productId="+product_id;
             }else{
-                User user = ;
+                // SUCCESS_MSG
+                User user = userService.findUserByUserId(user_id);
                 redirect.addAttribute("user", user);
                 return "redirect:/main/list/user";
             }
         }else{
-
+            // PRODUCT_STOCK_ERROR
+            return "redirect:/order?userId="+user_id+"&productId="+product_id;
         }
-        return "mainInit";
     }
 
-
+    // Only Manager can use this function
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String show_Order_List(Model model) {
+        List<Order> succ_Orders = orderService.findAllCompletedOrder();
+        model.addAttribute("succOrders", succ_Orders);
 
-
-
-        return "order";
+        return "orderList";
     }
 
 

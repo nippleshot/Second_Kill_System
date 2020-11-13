@@ -41,8 +41,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="<c:url value="" />">MSXT</a>
-        <button class="btn btn-primary" href="#">µÇÂ¼ / ×¢²á</button>
+        <a class="navbar-brand" href="<c:url value="/main/list.html" />">MSXT</a>
+        <button class="btn btn-primary" onClick="location.href='<c:url value="/user/login.html" />'">µÇÂ¼ / ×¢²á</button>
     </div>
 </nav>
 
@@ -63,27 +63,54 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-md-3 col-sm-6">
-                <div class="product-grid4">
-                    <div class="product-image4">
-                        <a href="#">
-                            <img class="pic-1" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-1.jpg">
-                            <img class="pic-2" src="http://bestjquery.com/tutorial/product-grid/demo5/images/img-2.jpg">
-                        </a>
+            <c:forEach items="${allProduct}" var="product" >
+                <c:choose>
+                    <c:when test="${product.value eq true}">
+                        <c:forEach items="${product.key}" var="productInfo" >
+                            <div class="col-md-3 col-sm-6">
+                                <div class="product-grid4">
+                                    <div class="product-image4">
+                                        <a href="#">
+                                            <img class="pic-1" src="<c:out value="${productInfo.photo}"/>" >
+                                        </a>
 
-                        <span class="product-new-label">ÃëÉ±¿ªÊ¼</span>
-                    </div>
-                    <div class="product-content">
-                        <h3 class="title"><a href="#">Women's Black Top</a></h3>
-                        <div class="price">
-                            $14.40
-                            <span>$16.00</span>
-                        </div>
-                        <a class="add-to-cart" href="">Á¢¼´¹ºÂò</a>
-                    </div>
-                </div>
-            </div>
+                                        <span class="product-new-label">ÃëÉ±¿ªÊ¼</span>
+                                    </div>
+                                    <div class="product-content">
+                                        <h3 class="title"><c:out value="${productInfo.productName}"/></h3>
+                                        <div class="price">
+                                            <c:out value="${productInfo.priceSpike}"/>
+                                            <span><c:out value="${productInfo.price}"/></span>
+                                        </div>
+                                        <a class="add-to-cart" href="#" onClick='alert("ÇëµÇÂ¼/×¢²á"); return false'>Á¢¼´¹ºÂò</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
 
+                    <c:when test="${product.value eq false}">
+                        <c:forEach items="${product.key}" var="productInfo" >
+                            <div class="col-md-3 col-sm-6">
+                                <div class="product-grid4">
+                                    <div class="product-image4">
+                                        <a href="#">
+                                            <img class="pic-1" src="<c:out value="${productInfo.photo}"/>" >
+                                        </a>
+                                    </div>
+                                    <div class="product-content">
+                                        <h3 class="title"><c:out value="${productInfo.productName}"/></h3>
+                                        <div class="price">
+                                            <c:out value="${productInfo.price}"/>
+                                        </div>
+                                        <a class="add-to-cart" href="#" onClick='alert("ÇëµÇÂ¼/×¢²á"); return false'>Á¢¼´¹ºÂò</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
         </div>
     </div>
 </section>
@@ -110,7 +137,7 @@
                         <a href="#">Privacy Policy</a>
                     </li>
                 </ul>
-                <p class="text-muted small mb-4 mb-lg-0">&copy; ¡¾2020ÒÆ¶¯»¥ÁªÍøÈí¼þ¹¤³Ì¡¿ £ºÐìÖ¾Íþ£¬ËÎ¼ªÔØ  All Rights Reserved.</p>
+                <p class="text-muted small mb-4 mb-lg-0">&copy; ¡¾2020ÒÆ¶¯»¥ÁªÍøÈí¼þ¹¤³Ì¡¿ £ºÐìÖ¾Íþ£¬ËÎ¼ªÔØ   All Rights Reserved.</p>
             </div>
             <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
                 <ul class="list-inline mb-0">

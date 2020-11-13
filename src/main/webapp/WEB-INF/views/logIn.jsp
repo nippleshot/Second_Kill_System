@@ -41,7 +41,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">MSXT</a>
+        <a class="navbar-brand" href="<c:url value="/main/list.html" />">MSXT</a>
     </div>
 </nav>
 
@@ -55,7 +55,7 @@
                 <button class="switch-button" id="slide-right-button">登录</button>
             </div>
             <div class="sign-up" id="sign-up">
-                <h1>哈喽!</h1>
+                <h1>哈喽!您是新来的吗？</h1>
                 <p>请输入您的个人信息，和我们一起开始旅程吧</p>
                 <button class="switch-button" id="slide-left-button">免费注册</button>
             </div>
@@ -64,21 +64,20 @@
         <div class="form">
             <div class="sign-in" id="sign-in-info">
                 <h1>登录</h1>
-                <form id="sign-in-form">
-                    <input type="email" placeholder="账号名"/>
-                    <input type="password" placeholder="密码"/>
-                    <p class="forgot-password">忘记了密码?</p>
-                    <button class="control-button in">登录</button>
-                </form>
+                    <sf:form method="POST" action="/mxst/user/login.html" id="sign-in-form" commandName="user" >
+                        <sf:input path="userName" type="text" placeholder="账号名"/>
+                        <sf:input path="password" type="password" placeholder="密码"/>
+                        <button class="control-button in" type="submit">登录</button>
+                    </sf:form>
             </div>
 
             <div class="sign-up" id="sign-up-info">
                 <h1>账号注册</h1>
-                <form id="sign-up-form">
-                    <input type="text" placeholder="账号名"/>
-                    <input type="password" placeholder="密码"/>
-                    <button class="control-button up">注册</button>
-                </form>
+                <sf:form method="POST" action="/mxst/user/register.html" id="sign-up-form" commandName="user">
+                    <sf:input path="userName" type="text" placeholder="账号名"/>
+                    <sf:input path="password" type="password" placeholder="密码"/>
+                    <button class="control-button up" type="submit">注册</button>
+                </sf:form>
             </div>
         </div>
     </div>
