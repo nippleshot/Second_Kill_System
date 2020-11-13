@@ -65,7 +65,7 @@ public class ProductDao {
     }
 
     public void deleteProduct(int productId) {
-        String sqlStr = "DELETE * FROM t_product WHERE product_id=?";
+        String sqlStr = "DELETE FROM t_product WHERE product_id=?";
         Object[] args = {productId};
         jdbcTemplate.update(sqlStr, args);
     }
