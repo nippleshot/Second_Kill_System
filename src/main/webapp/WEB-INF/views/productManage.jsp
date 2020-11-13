@@ -67,28 +67,28 @@
                 </tr>
                 </thead>
 
-                <c:forEach items="${allProduct.key}" var="productInfo" >
+                <c:forEach items="${allProduct}" var="productInfo" >
                     <tr>
-                        <td><c:out value="${productInfo.productId}"/></td>
+                        <td><c:out value="${productInfo.key.productId}"/></td>
                         <td>
                             <div class="product-image4">
                                 <a href="#">
-                                    <img class="pic-1" src="<c:out value="${productInfo.photo}"/>">
+                                    <img class="pic-1" src="<c:out value="${productInfo.key.photo}"/>">
                                 </a>
                             </div>
                         </td>
-                        <td><c:out value="${productInfo.productName}"/></td>
-                        <td><c:out value="${productInfo.description}"/></td>
-                        <td><c:out value="${productInfo.startTime}"/><br/><c:out value="${productInfo.endTime}"/></td>
-                        <td><c:out value="${productInfo.price}"/></td>
-                        <td><c:out value="${productInfo.priceSpike}"/></td>
-                        <td><c:out value="${productInfo.stock}"/></td>
+                        <td><c:out value="${productInfo.key.productName}"/></td>
+                        <td><c:out value="${productInfo.key.description}"/></td>
+                        <td><c:out value="${productInfo.key.startTime}"/><br/><c:out value="${productInfo.key.endTime}"/></td>
+                        <td><c:out value="${productInfo.key.price}"/></td>
+                        <td><c:out value="${productInfo.key.priceSpike}"/></td>
+                        <td><c:out value="${productInfo.key.stock}"/></td>
                         <td class="text-center">
-                            <button class='btn btn-info btn-xs' data-toggle="modal" data-target="#product_fix" data-url="<c:out value="${productInfo.photo}"/>" data-name="<c:out value="${productInfo.productName}"/>" data-description="<c:out value="${productInfo.description}"/>" data-ori="<c:out value="${productInfo.price}"/>" data-sale="<c:out value="${productInfo.priceSpike}"/>" data-stock="<c:out value="${productInfo.stock}"/>" >
+                            <button class='btn btn-info btn-xs' data-toggle="modal" data-target="#product_fix" data-url="<c:out value="${productInfo.key.photo}"/>" data-name="<c:out value="${productInfo.key.productName}"/>" data-description="<c:out value="${productInfo.key.description}"/>" data-ori="<c:out value="${productInfo.key.price}"/>" data-sale="<c:out value="${productInfo.key.priceSpike}"/>" data-stock="<c:out value="${productInfo.key.stock}"/>" >
                                 <span class="glyphicon glyphicon-edit"></span>
                                 修改
                             </button>
-                            <button class="btn btn-danger btn-xs" onClick="location.href='/mxst/product/list/delete.html?productId=<c:out value="${productInfo.productId}"/>'" type="submit" formmethod="post">
+                            <button class="btn btn-danger btn-xs" onClick="location.href='/mxst/product/list/delete.html?productId=<c:out value="${productInfo.keyt.productId}"/>'" type="submit" formmethod="post">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 删除
                             </button>
@@ -109,8 +109,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-12 product_content">
                         <sf:form method="POST" action="/mxst/product/list/add.html" commandName="product">
+                        <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>
                                 <tr>
@@ -123,7 +123,7 @@
                                         图片（URL）
                                     </td>
                                     <td>
-                                        <input type="text"/>
+                                        <sf:input path="photo" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -131,7 +131,7 @@
                                         商品名
                                     </td>
                                     <td>
-                                        <input type="text"/>
+                                        <sf:input path="productName" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -139,7 +139,7 @@
                                         商品简介
                                     </td>
                                     <td>
-                                        <textarea name="content" cols="40" rows="8" ></textarea>
+                                        <sf:textarea path="description" cols="48" rows="8"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -147,8 +147,7 @@
                                         秒杀开始
                                     </td>
                                     <td>
-                                        <input type="date"/>
-                                        <input type="time"/>
+                                        <sf:input path="startTime" type="datetime-local"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -156,8 +155,7 @@
                                         秒杀结束
                                     </td>
                                     <td>
-                                        <input type="date"/>
-                                        <input type="time"/>
+                                        <sf:input path="endTime" type="datetime-local"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -165,7 +163,7 @@
                                         原价
                                     </td>
                                     <td>
-                                        <input type="number" min=0/>
+                                        <sf:input path="price" type="number"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -173,7 +171,7 @@
                                         折扣价
                                     </td>
                                     <td>
-                                        <input type="number" min=0/>
+                                        <sf:input path="priceSpike" type="number"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -181,22 +179,22 @@
                                         存库量
                                     </td>
                                     <td>
-                                        <input type="number" min=0/>
+                                        <sf:input path="stock" type="number"/>
                                     </td>
                                 </tr>
                             </table>
-                        </sf:form>
                         </div>
                         <div class="col-md-12 text-center">
                             <button class='btn btn-info btn-xs' href="#" style="background:#007bff">
                                 <span class="glyphicon glyphicon-edit"></span>
                                 添加
                             </button>
-                            <button data-dismiss="modal" class="btn btn-danger btn-xs">
+                            <button data-dismiss="modal" class="btn btn-danger btn-xs" type="submit">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 取消
                             </button>
                         </div>
+                        </sf:form>
                     </div>
                 </div>
             </div>
@@ -212,6 +210,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <sf:form method="POST" action="/mxst/product/list/fix.html" commandName="product">
                         <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>
@@ -225,7 +224,7 @@
                                         图片（URL）
                                     </td>
                                     <td>
-                                        <input type="text" id="photo" value=""/>
+                                        <sf:input path="photo" id="photo" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -233,7 +232,7 @@
                                         商品名
                                     </td>
                                     <td>
-                                        <input type="text" id="product_name" value=""/>
+                                        <sf:input path="productName" id="product_name" type="text"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -241,7 +240,7 @@
                                         商品简介
                                     </td>
                                     <td>
-                                        <textarea name="content" cols="40" rows="8" id="description" value=""></textarea>
+                                        <sf:textarea path="description" cols="48" rows="8" id="description"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -249,8 +248,7 @@
                                         秒杀开始
                                     </td>
                                     <td>
-                                        <input type="date"/>
-                                        <input type="time"/>
+                                        <sf:input path="startTime" type="datetime-local"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -258,8 +256,7 @@
                                         秒杀结束
                                     </td>
                                     <td>
-                                        <input type="date"/>
-                                        <input type="time"/>
+                                        <sf:input path="endTime" type="datetime-local"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -267,7 +264,7 @@
                                         原价
                                     </td>
                                     <td>
-                                        <input type="number" min=0 id="price_original" value=""/>
+                                        <sf:input path="price" type="number" id="price_original"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -275,7 +272,7 @@
                                         折扣价
                                     </td>
                                     <td>
-                                        <input type="number" min=0 id="price_sale" value=""/>
+                                        <sf:input path="priceSpike" type="number" id="price_sale"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -283,13 +280,13 @@
                                         存库量
                                     </td>
                                     <td>
-                                        <input type="number" min=0 id="stock" value=""/>
+                                        <sf:input path="stock" type="number" id="stock"/>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="col-md-12 text-center">
-                            <button class='btn btn-info btn-xs' href="#">
+                            <button class='btn btn-info btn-xs' type="submit">
                                 <span class="glyphicon glyphicon-edit"></span>
                                 修改
                             </button>
@@ -298,6 +295,7 @@
                                 取消
                             </button>
                         </div>
+                        </sf:form>
                     </div>
                 </div>
             </div>

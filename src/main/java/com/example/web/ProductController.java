@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,6 +34,8 @@ public class ProductController {
     public String show_Product_List(Model model) {
         List<Pair<Product, Boolean>> all_Product = productService.getAllProducts();
         model.addAttribute("allProduct", all_Product);
+        model.addAttribute(new Product());
+
         return "productManage";
     }
 
