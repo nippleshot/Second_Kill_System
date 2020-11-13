@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="section1.war">
+    <root id="archive" name="msxt.war">
       <element id="artifact" artifact-name="second_kill_system_of_mall:war exploded" />
     </root>
   </artifact>

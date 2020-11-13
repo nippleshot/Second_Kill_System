@@ -34,11 +34,10 @@ public class Product implements Serializable {
         this.startTime = startTime;
         this.endTime = endTime;
     }
-
+    
     public Product(){
 
     }
-
 
     public int getProductId() {
         return productId;

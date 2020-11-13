@@ -38,6 +38,10 @@ public class Order implements Serializable {
         this.isPaid = false;
     }
 
+    public Order(){
+
+    }
+
     public int getOrderId() {
         return orderId;
     }
