@@ -3,8 +3,11 @@ package com.example.dao;
 import com.example.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -15,7 +18,18 @@ public class ProductDao {
 
     public Product findProduct(int productId) {
         String sqlStr = "SELECT * FROM t_product WHERE product_id=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{productId}, Product.class);
+        return jdbcTemplate.queryForObject(sqlStr, new Object[]{productId}, (resultSet, i) -> {
+            Product product = new Product(resultSet.getString("product_name"),
+                    resultSet.getString("photo"),
+                    resultSet.getString("description"),
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("stock"),
+                    resultSet.getDouble("price_spike"),
+                    resultSet.getDate("start_time"),
+                    resultSet.getDate("end_time"));
+            product.setProductId(resultSet.getInt("product_id"));
+            return product;
+        });
     }
 
     public List<Product> getAllProduct() {
@@ -51,8 +65,9 @@ public class ProductDao {
     }
 
     public void deleteProduct(int productId) {
-        String sqlStr = "DELETE * FROM t_product WHERE product_id=" + productId;
-        jdbcTemplate.execute(sqlStr);
+        String sqlStr = "DELETE * FROM t_product WHERE product_id=?";
+        Object[] args = {productId};
+        jdbcTemplate.update(sqlStr, args);
     }
 
 }

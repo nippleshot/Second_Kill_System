@@ -22,7 +22,7 @@ public class User implements Serializable {
         this.balance = 0;
     }
 
-    public User(){
+    public User() {
 
     }
 

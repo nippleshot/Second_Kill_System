@@ -3,8 +3,11 @@ package com.example.dao;
 import com.example.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +29,19 @@ public class OrderDao {
 
     public Order findOrderByUserIdAndTime(int userId, Date createTime) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND create_time=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, createTime}, Order.class);
+        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, createTime}, (resultSet, i) -> {
+            Order order = new Order(resultSet.getInt("user_id"),
+                    resultSet.getInt("product_id"),
+                    resultSet.getInt("num"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("consignee"),
+                    resultSet.getString("telephone_number"),
+                    resultSet.getString("address"),
+                    resultSet.getDate("create_time"));
+            order.setOrderId(resultSet.getInt("order_id"));
+            order.setPaid(resultSet.getBoolean("is_paid"));
+            return order;
+        });
     }
 
     public List<Order> findAllCompletedOrder() {
@@ -36,7 +51,19 @@ public class OrderDao {
 
     public Order findOrderByOrderId(int orderId) {
         String sqlStr = "SELECT * FROM t_order WHERE order_id=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{orderId}, Order.class);
+        return jdbcTemplate.queryForObject(sqlStr, new Object[]{orderId}, (resultSet, i) -> {
+            Order order = new Order(resultSet.getInt("user_id"),
+                    resultSet.getInt("product_id"),
+                    resultSet.getInt("num"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("consignee"),
+                    resultSet.getString("telephone_number"),
+                    resultSet.getString("address"),
+                    resultSet.getDate("create_time"));
+            order.setOrderId(resultSet.getInt("order_id"));
+            order.setPaid(resultSet.getBoolean("is_paid"));
+            return order;
+        });
     }
 
     public void insertOrder(Order order) {

@@ -35,6 +35,10 @@ public class Product implements Serializable {
         this.endTime = endTime;
     }
 
+    public Product() {
+
+    }
+
     public int getProductId() {
         return productId;
     }

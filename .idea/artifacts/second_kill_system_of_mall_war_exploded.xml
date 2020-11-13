@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="second_kill_system_of_mall:war exploded">
-    <output-path>$PROJECT_DIR$/target/section1</output-path>
+    <output-path>$PROJECT_DIR$/target/msxt</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
@@ -37,7 +37,7 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/section1/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/msxt/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="second_kill_system_of_mall/web/Web" />
     </root>
