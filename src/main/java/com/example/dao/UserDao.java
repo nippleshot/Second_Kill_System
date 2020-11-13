@@ -27,7 +27,7 @@ public class UserDao {
 
     public User findUserByUserName(String userName) {
         String sqlStr = " SELECT * "
-                + " FROM t_user WHERE user_name =? ";
+                + " FROM t_user WHERE user_name=? ";
 
         return jdbcTemplate.queryForObject(sqlStr, new Object[]{userName}, User.class);
     }
