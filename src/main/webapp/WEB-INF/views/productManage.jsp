@@ -88,7 +88,7 @@
                                 <span class="glyphicon glyphicon-edit"></span>
                                 ÐÞ¸Ä
                             </button>
-                            <button class="btn btn-danger btn-xs" onClick="location.href='/mxst/product/list/delete.html?productId=<c:out value="${productInfo.keyt.productId}"/>'" type="submit" formmethod="post">
+                            <button class="btn btn-danger btn-xs" onClick="location.href='/mxst/product/list/delete.html?productId=<c:out value="${productInfo.key.productId}"/>'" type="submit" formmethod="post">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 É¾³ý
                             </button>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <sf:form method="POST" action="/mxst/product/list/fix.html" commandName="product">
+                        <sf:form method="POST" action="/mxst/product/list/fix.html" commandName="productInfo">
                         <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>

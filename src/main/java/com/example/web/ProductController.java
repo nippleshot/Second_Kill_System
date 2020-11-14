@@ -38,7 +38,6 @@ public class ProductController {
     public String show_Product_List(Model model) {
         List<Pair<Product, Boolean>> all_Product = productService.getAllProducts();
         model.addAttribute("allProduct", all_Product);
-        model.addAttribute(new Product());
         model.addAttribute(new ProductInfo());
 
         return "productManage";
