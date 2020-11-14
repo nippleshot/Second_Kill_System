@@ -37,7 +37,7 @@ public class OrderController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
     public String show_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, Model model) {
         model.addAttribute("product",productService.findProductByProductId(product_id));
         model.addAttribute("user",user_id);
@@ -79,12 +79,17 @@ public class OrderController {
     // Only Manager can use this function
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String show_Order_List(Model model) {
-        List<Order> succ_Orders = orderService.findAllCompletedOrder();
-        model.addAttribute("succOrders", succ_Orders);
-
+        List<Order> orders = orderService.findAllOrder();
+        model.addAttribute("orders", orders);
         return "orderList";
     }
 
-
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public String getOrderListByUserIdAndProductId(Model model, HttpServletRequest request) {
+        List<Order> orders = orderService.findOrderByUserIdAndProductId(Integer.parseInt(request.getParameter("userId")),
+                Integer.parseInt(request.getParameter("productId")));
+        model.addAttribute("orders", orders);
+        return "orderList";
+    }
 
 }

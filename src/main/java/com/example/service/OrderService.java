@@ -61,6 +61,13 @@ public class OrderService {
     }
 
     /**
+     * 查找全部订单
+     */
+    public List<Order> findAllOrder() {
+        return orderDao.findAllOrder();
+    }
+
+    /**
      * 查找全部已完成订单
      */
     public List<Order> findAllCompletedOrder() {
@@ -72,6 +79,20 @@ public class OrderService {
      */
     public Order findOrderByUserIdAndCreateTime(int userId, Date createTime) {
         return orderDao.findOrderByUserIdAndTime(userId, createTime);
+    }
+
+    /**
+     * 获取全部订单
+     */
+    public List<Order> getAllOrder() {
+        return orderDao.findAllOrder();
+    }
+
+    /**
+     * 根据用户和id和商品id获取订单
+     */
+    public List<Order> findOrderByUserIdAndProductId(int userId, int productId) {
+        return orderDao.findOrderByUserIdAndProductId(userId, productId);
     }
 
 }
