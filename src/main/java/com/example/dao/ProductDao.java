@@ -25,8 +25,8 @@ public class ProductDao {
                     resultSet.getDouble("price"),
                     resultSet.getInt("stock"),
                     resultSet.getDouble("price_spike"),
-                    resultSet.getDate("start_time"),
-                    resultSet.getDate("end_time"));
+                    resultSet.getTimestamp("start_time"),
+                    resultSet.getTimestamp("end_time"));
             product.setProductId(resultSet.getInt("product_id"));
             return product;
         });
@@ -41,8 +41,8 @@ public class ProductDao {
                     resultSet.getDouble("price"),
                     resultSet.getInt("stock"),
                     resultSet.getDouble("price_spike"),
-                    resultSet.getDate("start_time"),
-                    resultSet.getDate("end_time"));
+                    resultSet.getTimestamp("start_time"),
+                    resultSet.getTimestamp("end_time"));
             product.setProductId(resultSet.getInt("product_id"));
             return product;
         });

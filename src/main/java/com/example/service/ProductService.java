@@ -36,10 +36,15 @@ public class ProductService {
         Date startTime = product.getStartTime();
         Date endTime = product.getEndTime();
         Pair<Product, Boolean> res;
-        if (now.compareTo(startTime) >= 0 && now.compareTo(endTime) <= 0)
+        if (now.getTime() >= startTime.getTime() && now.getTime() <= endTime.getTime())
             res = new Pair<>(product, true);
-        else
+        else {
+//            System.out.println(productId);
+//            System.out.println(now);
+//            System.out.println(startTime);
+//            System.out.println(endTime);
             res = new Pair<>(product, false);
+        }
         return res;
     }
 
@@ -53,10 +58,15 @@ public class ProductService {
         for(Product product : products) {
             Date startTime = product.getStartTime();
             Date endTime = product.getEndTime();
-            if (now.compareTo(startTime) >= 0 && now.compareTo(endTime) <= 0)
+            if (now.getTime() >= startTime.getTime() && now.getTime() <= endTime.getTime())
                 res.add(new Pair<>(product, true));
-            else
+            else {
+//                System.out.println(product.getProductId());
+//                System.out.println(now);
+//                System.out.println(startTime);
+//                System.out.println(endTime);
                 res.add(new Pair<>(product, false));
+            }
         }
         return res;
     }

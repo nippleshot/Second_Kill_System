@@ -78,7 +78,7 @@ public class OrderDao {
                     resultSet.getString("consignee"),
                     resultSet.getString("telephone_number"),
                     resultSet.getString("address"),
-                    resultSet.getDate("create_time"));
+                    resultSet.getTimestamp("create_time"));
             order.setOrderId(resultSet.getInt("order_id"));
             order.setPaid(resultSet.getBoolean("is_paid"));
             return order;
@@ -95,7 +95,7 @@ public class OrderDao {
                     resultSet.getString("consignee"),
                     resultSet.getString("telephone_number"),
                     resultSet.getString("address"),
-                    resultSet.getDate("create_time"));
+                    resultSet.getTimestamp("create_time"));
             order.setOrderId(resultSet.getInt("order_id"));
             order.setPaid(resultSet.getBoolean("is_paid"));
             return order;
