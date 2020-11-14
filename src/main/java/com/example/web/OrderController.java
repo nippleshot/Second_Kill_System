@@ -42,7 +42,7 @@ public class OrderController {
         model.addAttribute("product",productService.findProductByProductId(product_id));
         model.addAttribute("user",user_id);
 
-        return "order";
+        return "orderList";
     }
 
     // 잘못함 HttpServletRequest로 받으면 안됨 Order로 받아야되
