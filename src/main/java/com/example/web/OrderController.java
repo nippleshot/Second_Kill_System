@@ -1,10 +1,12 @@
 package com.example.web;
 
 import com.example.domain.Order;
+import com.example.domain.Product;
 import com.example.domain.User;
 import com.example.service.OrderService;
 import com.example.service.ProductService;
 import com.example.service.UserService;
+import javafx.util.Pair;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,21 +41,48 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String show_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, Model model) {
-        model.addAttribute("product",productService.findProductByProductId(product_id));
-        model.addAttribute("user",user_id);
+
+        Pair<Product, Boolean> product_Info = productService.findProductByProductId(product_id);
+        boolean is_Seckill_Start = product_Info.getValue();
+        int productId = product_Info.getKey().getProductId();
+        String productName = product_Info.getKey().getProductName();
+        String photo = product_Info.getKey().getPhoto();
+        String description = product_Info.getKey().getDescription();
+        double price = product_Info.getKey().getPrice();
+        int stock = product_Info.getKey().getStock();
+        double priceSpike = product_Info.getKey().getPriceSpike();
+        Date start_time = product_Info.getKey().getStartTime();
+        Date end_time = product_Info.getKey().getEndTime();
+
+        Date now = new Date();
+        if(is_Seckill_Start){
+            Date time_Left = new Date();
+
+            model.addAttribute("timeLeft", time_Left);
+        }
+
+        model.addAttribute("userId",user_id);
+        model.addAttribute(new Order());
+        model.addAttribute("isStart",is_Seckill_Start);
+        model.addAttribute("productId",productId);
+        model.addAttribute("productName", productName);
+        model.addAttribute("photo", photo);
+        model.addAttribute("description", description);
+        model.addAttribute("price", price);
+        model.addAttribute("stock", stock);
+        model.addAttribute("priceSpike", priceSpike);
 
         return "orderList";
     }
 
-    // 잘못함 HttpServletRequest로 받으면 안됨 Order로 받아야되
     @RequestMapping(method = RequestMethod.POST)
-    public String make_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, HttpServletRequest request, RedirectAttributes redirect) {
-
-        int num = Integer.parseInt(request.getParameter("number"));
-        double total_price = Double.parseDouble(request.getParameter("total"));
-        String consignee = request.getParameter("consignee");
-        String telephone = request.getParameter("telephone");
-        String address = request.getParameter("address");
+    public String make_Order(@RequestParam(value ="userId") int user_id, Order order, RedirectAttributes redirect) {
+        int product_id = order.getProductId();
+        int num = order.getNum();
+        double total_price = order.getTotalPrice();
+        String consignee = order.getConsignee();
+        String telephone = order.getTelephoneNumber();
+        String address = order.getAddress();
         Date date = new Date();
 
         int is_Create_Succ = orderService.createNewOrder(user_id, product_id, num, total_price, consignee, telephone, address, date);

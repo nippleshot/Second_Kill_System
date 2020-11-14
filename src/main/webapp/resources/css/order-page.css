@@ -1,47 +1,46 @@
-
 .action-wishlist:hover,
 .action-wishlist:focus{
-  color:#fff;
+    color:#fff;
 }
 .add-to-cart.action-wishlist {
-  width: 50px;
-  text-align: center;
-  padding: 0;
+    width: 50px;
+    text-align: center;
+    padding: 0;
 }
 .add-to-cart.action-wishlist i {
-  margin-right: 0px;
+    margin-right: 0px;
 }
 .product-add-to-cart .cart-title,
 .product-add-to-cart .cart-title:hover,
 .product-list-action .cart-title,
 .product-list-action .cart-title:hover {
-  background-color: transparent;
-  border-top: none;
-  border-bottom: none;
-  color: inherit;
+    background-color: transparent;
+    border-top: none;
+    border-bottom: none;
+    color: inherit;
 }
 .product-add-to-cart .pro-add-btn i,
 .product-list-action .pro-add-btn i {
-  margin-right: 10px;
-  font-size: 18px;
+    margin-right: 10px;
+    font-size: 18px;
 }
 .add-to-cart {
-  display: inline-block;
+    display: inline-block;
 }
 .action-wishlist:hover,
 .action-wishlist:focus{
-  color:#fff;
+    color:#fff;
 }
 .add-to-cart.action-wishlist i {
-  margin-right: 0px;
+    margin-right: 0px;
 }
 .product-add-to-cart {
-  float: none;
+    float: none;
 }
 .single-product-wishlist{
-  display: inline-block;
-  position: relative;
-  margin-left: 20px;
+    display: inline-block;
+    position: relative;
+    margin-left: 20px;
 }
 .product-thumbnail .owl-nav  {display: none;}
 

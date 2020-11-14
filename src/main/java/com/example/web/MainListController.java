@@ -47,7 +47,7 @@ public class MainListController {
             model.addAttribute("msg",request.getParameter("msg"));
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
-            out.println("<script>alert('"+request.getParameter("msg")+"'); history.go(-1);</script>");
+            out.println("<script>alert('"+request.getParameter("msg")+"');</script>");
             out.flush();
         }
 

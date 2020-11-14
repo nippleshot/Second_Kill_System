@@ -27,7 +27,9 @@ public class UserController {
 
     private static final String USER_NAME_EXIST_MSG = "Register input is already exist";
     private static final String LOGIN_FAIL_MSG = "Inappropriate Login input";
+    private static final String CHARGE_ERROR_MSG = "You should charge more than 0";
     private static final String REGISTER_SUCCESS = "Register Succeed";
+    private static final String CHARGE_SUCCESS = "Charge Succeed";
 
     @Autowired
     public UserController(UserService userService) {
@@ -97,19 +99,42 @@ public class UserController {
     }
 
     @RequestMapping(value = "/charge", method = RequestMethod.GET)
-    public String charge(@RequestParam(value ="userId") int user_id, Model model) {
+    public String charge(@RequestParam(value ="userId") int user_id, HttpServletRequest request, HttpServletResponse response,Model model) throws IOException {
+        if(request.getParameter("msg")!=null){
+            model.addAttribute("msg",request.getParameter("msg"));
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('"+request.getParameter("msg")+"'); history.go(-1);</script>");
+            out.flush();
+        }
+
         User user = userService.findUserByUserId(user_id);
-        model.addAttribute("user", user);
+
+        model.addAttribute(new User());
+        model.addAttribute("userId", user.getUserId());
+        model.addAttribute("userName", user.getUserName());
+        model.addAttribute("userBalance", user.getBalance());
         return "charge";
     }
 
     @RequestMapping(value = "/charge", method = RequestMethod.POST)
     public String charge(User user, RedirectAttributes redirect) {
-        userService.recharge((int)user.getBalance(),user.getUserId());
+
+        if(user.getBalance()<=0){
+            redirect.addAttribute("msg", CHARGE_ERROR_MSG);
+            return "redirect:/user/charge.html?userId="+user.getUserId();
+        }else{
+            userService.recharge((int)user.getBalance(),user.getUserId());
+        }
+
 
         User after_charge = userService.findUserByUserId(user.getUserId());
-        redirect.addAttribute("user", after_charge);
-        return "redirect:/main/list/user";
+
+        redirect.addAttribute("userId", after_charge.getUserId());
+        redirect.addAttribute("userName", after_charge.getUserName());
+        redirect.addAttribute("userBalance", after_charge.getBalance());
+        redirect.addAttribute("msg", CHARGE_SUCCESS);
+        return "redirect:/main/list/user.html";
     }
 
 
