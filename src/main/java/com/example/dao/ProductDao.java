@@ -34,7 +34,18 @@ public class ProductDao {
 
     public List<Product> getAllProduct() {
         String sqlStr = "SELECT * FROM t_product";
-        return jdbcTemplate.queryForList(sqlStr, Product.class);
+        return jdbcTemplate.query(sqlStr, (resultSet, i) -> {
+            Product product = new Product(resultSet.getString("product_name"),
+                    resultSet.getString("photo"),
+                    resultSet.getString("description"),
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("stock"),
+                    resultSet.getDouble("price_spike"),
+                    resultSet.getDate("start_time"),
+                    resultSet.getDate("end_time"));
+            product.setProductId(resultSet.getInt("product_id"));
+            return product;
+        });
     }
 
     public void insertProduct(Product product) {

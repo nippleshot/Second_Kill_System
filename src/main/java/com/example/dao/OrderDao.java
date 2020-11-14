@@ -19,12 +19,36 @@ public class OrderDao {
 
     public List<Order> findOrderByUserId(int userId) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=?";
-        return jdbcTemplate.queryForList(sqlStr, new Object[]{userId}, Order.class);
+        return jdbcTemplate.query(sqlStr, new Object[]{userId}, (resultSet, i) -> {
+            Order order = new Order(resultSet.getInt("user_id"),
+                    resultSet.getInt("product_id"),
+                    resultSet.getInt("num"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("consignee"),
+                    resultSet.getString("telephone_number"),
+                    resultSet.getString("address"),
+                    resultSet.getDate("create_time"));
+            order.setOrderId(resultSet.getInt("order_id"));
+            order.setPaid(resultSet.getBoolean("is_paid"));
+            return order;
+        });
     }
 
     public List<Order> findOrderByUserIdAndProductId(int userId, int productId) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND product_id=?";
-        return jdbcTemplate.queryForList(sqlStr, new Object[]{userId, productId}, Order.class);
+        return jdbcTemplate.query(sqlStr, new Object[]{userId, productId}, (resultSet, i) -> {
+            Order order = new Order(resultSet.getInt("user_id"),
+                    resultSet.getInt("product_id"),
+                    resultSet.getInt("num"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("consignee"),
+                    resultSet.getString("telephone_number"),
+                    resultSet.getString("address"),
+                    resultSet.getDate("create_time"));
+            order.setOrderId(resultSet.getInt("order_id"));
+            order.setPaid(resultSet.getBoolean("is_paid"));
+            return order;
+        });
     }
 
     public Order findOrderByUserIdAndTime(int userId, Date createTime) {
@@ -46,7 +70,19 @@ public class OrderDao {
 
     public List<Order> findAllCompletedOrder() {
         String sqlStr = "SELECT * FROM t_order WHERE is_paid=true";
-        return jdbcTemplate.queryForList(sqlStr, Order.class);
+        return jdbcTemplate.query(sqlStr, (resultSet, i) -> {
+            Order order = new Order(resultSet.getInt("user_id"),
+                    resultSet.getInt("product_id"),
+                    resultSet.getInt("num"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("consignee"),
+                    resultSet.getString("telephone_number"),
+                    resultSet.getString("address"),
+                    resultSet.getDate("create_time"));
+            order.setOrderId(resultSet.getInt("order_id"));
+            order.setPaid(resultSet.getBoolean("is_paid"));
+            return order;
+        });
     }
 
     public Order findOrderByOrderId(int orderId) {
