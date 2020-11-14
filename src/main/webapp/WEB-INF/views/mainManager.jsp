@@ -47,7 +47,7 @@
                 <c:out value="${managerName}"/>
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item">商品管理</a>
+                <a class="dropdown-item" href="<c:url value="/product/list.html" />">商品管理</a>
                 <a class="dropdown-item">订单管理</a>
             </div>
         </div>
@@ -73,7 +73,6 @@
 
             <c:forEach items="${allProduct}" var="product" >
                 <c:choose>
-                    <!-- if this product is starting seckill promotion -->
                     <c:when test="${product.value eq true}">
                         <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">
@@ -98,7 +97,6 @@
                         </c:forEach>
                     </c:when>
 
-                    <!-- if this product didn't start seckill promotion -->
                     <c:when test="${product.value eq false}">
                         <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">

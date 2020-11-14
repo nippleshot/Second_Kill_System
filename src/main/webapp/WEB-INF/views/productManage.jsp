@@ -109,7 +109,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <sf:form method="POST" action="/mxst/product/list/add.html" commandName="product">
+                        <sf:form method="POST" action="/mxst/product/list/add.html" commandName="productInfo">
                         <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>
@@ -185,11 +185,11 @@
                             </table>
                         </div>
                         <div class="col-md-12 text-center">
-                            <button class='btn btn-info btn-xs' href="#" style="background:#007bff">
+                            <button class='btn btn-info btn-xs' type="submit" style="background:#007bff">
                                 <span class="glyphicon glyphicon-edit"></span>
                                 Ìí¼Ó
                             </button>
-                            <button data-dismiss="modal" class="btn btn-danger btn-xs" type="submit">
+                            <button data-dismiss="modal" class="btn btn-danger btn-xs">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 È¡Ïû
                             </button>
@@ -221,7 +221,7 @@
                                 </thead>
                                 <tr>
                                     <td>
-                                        Í¼Æ¬£¨URL£©
+                                        Í¼Æ¬(URL)
                                     </td>
                                     <td>
                                         <sf:input path="photo" id="photo" type="text"/>

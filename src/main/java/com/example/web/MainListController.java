@@ -16,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +42,15 @@ public class MainListController {
     }
 
     @RequestMapping(value = "/list/user", method = RequestMethod.GET)
-    public String mainList_user(HttpServletRequest request, Model model) {
+    public String mainList_user(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        if(request.getParameter("msg")!=null){
+            model.addAttribute("msg",request.getParameter("msg"));
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('"+request.getParameter("msg")+"'); history.go(-1);</script>");
+            out.flush();
+        }
+
         model.addAttribute("userId", request.getParameter("userId"));
         model.addAttribute("userName", request.getParameter("userName"));
         model.addAttribute("userBalance", request.getParameter("userBalance"));
@@ -49,15 +60,9 @@ public class MainListController {
 
     @RequestMapping(value = "/list/manager", method = RequestMethod.GET)
     public String mainList_manager(HttpServletRequest request,Model model) {
-
-        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if(null != inputFlashMap) {
-            User member = (User)inputFlashMap.get("manager");
-            model.addAttribute("managerId", member.getUserId());
-            model.addAttribute("managerName", member.getUserName());
-        }
+        model.addAttribute("managerId", request.getParameter("managerId"));
+        model.addAttribute("managerName", request.getParameter("managerName"));
         model.addAttribute("allProduct",productService.getAllProducts());
-
         return "mainManager";
     }
 

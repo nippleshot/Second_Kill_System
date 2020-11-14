@@ -74,7 +74,6 @@
 
             <c:forEach items="${allProduct}" var="product" >
                 <c:choose>
-                    <!-- if this product is starting seckill promotion -->
                     <c:when test="${product.value eq true}">
                         <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">
@@ -99,7 +98,6 @@
                         </c:forEach>
                     </c:when>
 
-                    <!-- if this product didn't start seckill promotion -->
                     <c:when test="${product.value eq false}">
                         <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">

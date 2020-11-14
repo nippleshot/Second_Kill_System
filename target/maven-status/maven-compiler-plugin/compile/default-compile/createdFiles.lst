@@ -1,14 +1,1 @@
-com\example\service\ProductService.class
-com\example\dao\ProductDao.class
-com\example\domain\Product.class
-com\example\domain\Order.class
-com\example\web\OrderController.class
-com\example\dao\OrderDao.class
-com\example\web\ProductController.class
-com\example\dao\UserDao.class
-com\example\web\MainListController.class
-com\example\domain\User.class
-com\example\web\HomeController.class
-com\example\service\UserService.class
-com\example\web\UserController.class
-com\example\service\OrderService.class
+com/example/domain/ProductInfo.class

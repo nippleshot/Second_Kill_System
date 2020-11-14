@@ -2,6 +2,7 @@ package com.example.web;
 
 import com.example.domain.Order;
 import com.example.domain.Product;
+import com.example.domain.ProductInfo;
 import com.example.domain.User;
 import com.example.service.ProductService;
 import com.example.service.UserService;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -35,32 +39,51 @@ public class ProductController {
         List<Pair<Product, Boolean>> all_Product = productService.getAllProducts();
         model.addAttribute("allProduct", all_Product);
         model.addAttribute(new Product());
+        model.addAttribute(new ProductInfo());
 
         return "productManage";
     }
 
     @RequestMapping(value = "/list/add", method = RequestMethod.POST)
-    public String add_Product(Product product) {
-        productService.insertProduct(product.getProductName(), product.getPhoto(), product.getDescription(),
-                product.getPrice(), product.getStock(), product.getPriceSpike(),
-                product.getStartTime(), product.getEndTime());
+    public String add_Product(ProductInfo productInfo) {
 
-        return "redirect:/product/list";
+        System.out.println("Name: "+productInfo.getProductName());
+        System.out.println("Photo: "+productInfo.getPhoto());
+        System.out.println("Description: "+productInfo.getDescription());
+        System.out.println("Price: "+productInfo.getPrice());
+        System.out.println("PriceSpike: "+productInfo.getPriceSpike());
+        System.out.println("Stock: "+productInfo.getStock());
+        System.out.println("StartTime: "+productInfo.getStartTime().toString());
+        System.out.println("EndTime: "+productInfo.getEndTime().toString());
+
+        LocalDateTime StartTime_local = productInfo.getStartTime();
+        LocalDateTime EndTime_local = productInfo.getEndTime();
+
+
+        Date StartTime_Date = Date.from( StartTime_local.atZone( ZoneId.systemDefault()).toInstant());
+        Date EndTime_Date = Date.from( EndTime_local.atZone( ZoneId.systemDefault()).toInstant());
+
+        productService.insertProduct(productInfo.getProductName(), productInfo.getPhoto(), productInfo.getDescription(),
+                        productInfo.getPrice(), productInfo.getStock(), productInfo.getPriceSpike(),
+                StartTime_Date, EndTime_Date);
+
+        return "redirect:/product/list.html";
     }
+
 
     @RequestMapping(value = "/list/delete", method = RequestMethod.POST)
     public String delete_Product(@RequestParam(value ="productId") int product_id) {
         productService.deleteProduct(product_id);
 
-        return "redirect:/product/list";
+        return "redirect:/product/list.html";
     }
 
     @RequestMapping(value = "/list/fix", method = RequestMethod.POST)
     public String fix_Product(Product product) {
-        productService.updateProduct(product.getProductId(), product.getProductName(), product.getPhoto(), product.getDescription(),
-                product.getPrice(), product.getStock(), product.getPriceSpike(),
-                product.getStartTime(), product.getEndTime());
-        return "redirect:/product/list";
+//        productService.updateProduct(product.getProductId(), product.getProductName(), product.getPhoto(), product.getDescription(),
+//                product.getPrice(), product.getStock(), product.getPriceSpike(),
+//                product.getStartTime(), product.getEndTime());
+        return "redirect:/product/list.html";
     }
 
 

@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 
 @Controller
 @RequestMapping(value = "/user")
@@ -20,13 +25,24 @@ public class UserController {
 
     private UserService userService;
 
+    private static final String USER_NAME_EXIST_MSG = "Register input is already exist";
+    private static final String LOGIN_FAIL_MSG = "Inappropriate Login input";
+    private static final String REGISTER_SUCCESS = "Register Succeed";
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String show_Login(Model model) {
+    public String show_Login(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        if(request.getParameter("msg")!=null){
+            model.addAttribute("msg",request.getParameter("msg"));
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('"+request.getParameter("msg")+"'); history.go(-1);</script>");
+            out.flush();
+        }
         model.addAttribute(new User("",""));
         return "logIn";
     }
@@ -40,15 +56,19 @@ public class UserController {
             User find_user = userService.findUserByUserName(userName);
 
             if(find_user.getPrivilege() == 1){
-                redirect.addFlashAttribute("manager", find_user);
-                return "redirect:/main/list/manager";
+                redirect.addAttribute("managerId", find_user.getUserId());
+                redirect.addAttribute("managerName", find_user.getUserName());
+                return "redirect:/main/list/manager.html";
 
             }else if(find_user.getPrivilege() == 0){
-                redirect.addFlashAttribute("user", find_user);
-                return "redirect:/main/list/user";
+                redirect.addAttribute("userId", find_user.getUserId());
+                redirect.addAttribute("userName", find_user.getUserName());
+                redirect.addAttribute("userBalance", find_user.getBalance());
+                return "redirect:/main/list/user.html";
             }
         }else{
-            return "redirect:/login";
+            redirect.addAttribute("msg", LOGIN_FAIL_MSG);
+            return "redirect:/user/login.html";
         }
 
         return null;
@@ -58,17 +78,22 @@ public class UserController {
     public String register(User user, RedirectAttributes redirect) {
         String userName = user.getUserName();
         String password = user.getPassword();
-        // register user (No Error)
-        userService.register(userName, password);
+
+        if(userService.hasMatchUser(userName)){
+            redirect.addAttribute("msg", USER_NAME_EXIST_MSG);
+            return "redirect:/user/login.html";
+        }else{
+            userService.register(userName, password);
+        }
 
         User new_user = userService.findUserByUserName(userName);
-
 
         // redirect immediately to main/list
         redirect.addAttribute("userId", new_user.getUserId());
         redirect.addAttribute("userName", new_user.getUserName());
         redirect.addAttribute("userBalance", new_user.getBalance());
-        return "redirect:/main/list/user";
+        redirect.addAttribute("msg", REGISTER_SUCCESS);
+        return "redirect:/main/list/user.html";
     }
 
     @RequestMapping(value = "/charge", method = RequestMethod.GET)

@@ -34,6 +34,8 @@ public class UserDao {
 
         return jdbcTemplate.queryForObject(sqlStr, new Object[]{userName}, (resultSet, i) -> {
             User user=new User(resultSet.getString("user_name"), resultSet.getString("password"));
+            user.setPrivilege(resultSet.getInt("privilege"));
+            user.setBalance(resultSet.getDouble("balance"));
             user.setUserId(resultSet.getInt("user_id"));
             return user;
         });
@@ -43,6 +45,8 @@ public class UserDao {
         String sqlStr = "SELECT * FROM t_user WHERE user_id=?";
         return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId}, (resultSet, i) -> {
             User user=new User(resultSet.getString("user_name"), resultSet.getString("password"));
+            user.setPrivilege(resultSet.getInt("privilege"));
+            user.setBalance(resultSet.getDouble("balance"));
             user.setUserId(resultSet.getInt("user_id"));
             return user;
         });
