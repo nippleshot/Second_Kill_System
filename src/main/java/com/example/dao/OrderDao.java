@@ -17,11 +17,30 @@ public class OrderDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    public List<Order> findAllOrder() {
+        String sqlStr = "SELECT * FROM t_order";
+        return jdbcTemplate.query(sqlStr, (resultSet, i) -> {
+            Order order = new Order(
+                    resultSet.getInt("product_id"),
+                    resultSet.getInt("user_id"),
+                    resultSet.getInt("num"),
+                    resultSet.getDouble("total_price"),
+                    resultSet.getString("consignee"),
+                    resultSet.getString("telephone_number"),
+                    resultSet.getString("address"),
+                    resultSet.getDate("create_time"));
+            order.setOrderId(resultSet.getInt("order_id"));
+            order.setPaid(resultSet.getBoolean("is_paid"));
+            return order;
+        });
+    }
+
     public List<Order> findOrderByUserId(int userId) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=?";
         return jdbcTemplate.query(sqlStr, new Object[]{userId}, (resultSet, i) -> {
-            Order order = new Order(resultSet.getInt("user_id"),
+            Order order = new Order(
                     resultSet.getInt("product_id"),
+                    resultSet.getInt("user_id"),
                     resultSet.getInt("num"),
                     resultSet.getDouble("total_price"),
                     resultSet.getString("consignee"),
@@ -37,8 +56,9 @@ public class OrderDao {
     public List<Order> findOrderByUserIdAndProductId(int userId, int productId) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND product_id=?";
         return jdbcTemplate.query(sqlStr, new Object[]{userId, productId}, (resultSet, i) -> {
-            Order order = new Order(resultSet.getInt("user_id"),
+            Order order = new Order(
                     resultSet.getInt("product_id"),
+                    resultSet.getInt("user_id"),
                     resultSet.getInt("num"),
                     resultSet.getDouble("total_price"),
                     resultSet.getString("consignee"),
@@ -54,8 +74,9 @@ public class OrderDao {
     public Order findOrderByUserIdAndTime(int userId, Date createTime) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND create_time=?";
         return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, createTime}, (resultSet, i) -> {
-            Order order = new Order(resultSet.getInt("user_id"),
+            Order order = new Order(
                     resultSet.getInt("product_id"),
+                    resultSet.getInt("user_id"),
                     resultSet.getInt("num"),
                     resultSet.getDouble("total_price"),
                     resultSet.getString("consignee"),
@@ -71,8 +92,9 @@ public class OrderDao {
     public List<Order> findAllCompletedOrder() {
         String sqlStr = "SELECT * FROM t_order WHERE is_paid=true";
         return jdbcTemplate.query(sqlStr, (resultSet, i) -> {
-            Order order = new Order(resultSet.getInt("user_id"),
+            Order order = new Order(
                     resultSet.getInt("product_id"),
+                    resultSet.getInt("user_id"),
                     resultSet.getInt("num"),
                     resultSet.getDouble("total_price"),
                     resultSet.getString("consignee"),
@@ -88,8 +110,9 @@ public class OrderDao {
     public Order findOrderByOrderId(int orderId) {
         String sqlStr = "SELECT * FROM t_order WHERE order_id=?";
         return jdbcTemplate.queryForObject(sqlStr, new Object[]{orderId}, (resultSet, i) -> {
-            Order order = new Order(resultSet.getInt("user_id"),
+            Order order = new Order(
                     resultSet.getInt("product_id"),
+                    resultSet.getInt("user_id"),
                     resultSet.getInt("num"),
                     resultSet.getDouble("total_price"),
                     resultSet.getString("consignee"),

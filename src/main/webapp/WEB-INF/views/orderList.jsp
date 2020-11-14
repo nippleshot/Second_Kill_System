@@ -48,7 +48,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="<c:url value="/product/list.html?managerId=${managerId}&managerName=${managerName}" />">商品管理</a>
-                <a class="dropdown-item">订单管理</a>
+                <a class="dropdown-item" href='<c:url value="/order/list.html" />'>订单管理</a>
                 <a class="dropdown-item" href="<c:url value="/main/list/manager.html?managerId=${managerId}&managerName=${managerName}" />">主页面</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
@@ -70,15 +70,17 @@
                             <div class="row" style="width:150%">
                                 <div class="col-lg-12">
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                            <input type="text" class="form-control search-slt" placeholder="用户编号">
-                                        </div>
-                                        <div class="col-lg-5 col-md-5 col-sm-12 p-0">
-                                            <input type="datetime-local" class="form-control search-slt" placeholder="创建时间">
-                                        </div>
-                                        <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                                            <button type="button" class="btn btn-danger wrn-btn">搜索</button>
-                                        </div>
+                                        <sf:form method="POST">
+                                            <div class="col-lg-4 col-md-4 col-sm-12 p-0">
+                                                <input type="text" class="form-control search-slt" name="userId" placeholder="用户编号">
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-12 p-0">
+                                                <input type="text" class="form-control search-slt" name="productId" placeholder="商品编号">
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+                                                <button type="submit" class="btn btn-danger wrn-btn">搜索</button>
+                                            </div>
+                                        </sf:form>
                                     </div>
                                 </div>
                             </div>
@@ -98,26 +100,22 @@
 
                 </tr>
                 </thead>
-                <tr>
-                    <td>1</td>
-                    <td>2020/11/04</td>
-                    <td>12</td>
-                    <td>13</td>
-                    <td>5</td>
-                    <td>$11</td>
-                    <td>交付成功</td>
-
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td>2020/11/04</td>
-                    <td>32</td>
-                    <td>21</td>
-                    <td>4</td>
-                    <td>$11</td>
-                    <td>交付成功</td>
-                </tr>
+                <c:forEach items="${orders}" var="orderInfo" >
+                    <tr>
+                        <td><c:out value="${orderInfo.orderId}" /></td>
+                        <td><c:out value="${orderInfo.createTime}" /></td>
+                        <td><c:out value="${orderInfo.userId}" /></td>
+                        <td><c:out value="${orderInfo.productId}" /></td>
+                        <td><c:out value="${orderInfo.num}" /></td>
+                        <td><c:out value="$${orderInfo.totalPrice}" /></td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${orderInfo.paid eq true}">付款成功</c:when>
+                                <c:otherwise>尚未付款</c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
             </table>
         </div>
     </div>
