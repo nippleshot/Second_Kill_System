@@ -49,6 +49,7 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item">ÎÒµÄÓà¶î £º <c:out value="${userBalance}"/> </a>
                 <a class="dropdown-item" href="/charge?userId=${userId}">³äÖµ½ð¶î</a>
+                <a class="dropdown-item" href="<c:url value="/main/list.html" />">ÍË³ö</a>
             </div>
         </div>
     </div>
@@ -75,48 +76,44 @@
             <c:forEach items="${allProduct}" var="product" >
                 <c:choose>
                     <c:when test="${product.value eq true}">
-                        <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">
                                 <div class="product-grid4">
                                     <div class="product-image4">
                                         <a href="#">
-                                            <img class="pic-1" src="<c:out value="${productInfo.photo}"/>" >
+                                            <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
                                         </a>
 
                                         <span class="product-new-label">ÃëÉ±¿ªÊ¼</span>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title"><c:out value="${productInfo.productName}"/></h3>
+                                        <h3 class="title"><c:out value="${product.key.productName}"/></h3>
                                         <div class="price">
-                                            <c:out value="${productInfo.priceSpike}"/>
-                                            <span><c:out value="${productInfo.price}"/></span>
+                                            <c:out value="${product.key.priceSpike}"/>
+                                            <span><c:out value="${product.key.price}"/></span>
                                         </div>
-                                        <a class="add-to-cart" href="/order?userId=${userId}&productId=${productInfo.id}">Á¢¼´¹ºÂò</a>
+                                        <a class="add-to-cart" href="/order?userId=${userId}&productId=${product.key.productId}">Á¢¼´¹ºÂò</a>
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
                     </c:when>
 
                     <c:when test="${product.value eq false}">
-                        <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">
                                 <div class="product-grid4">
                                     <div class="product-image4">
                                         <a href="#">
-                                            <img class="pic-1" src="<c:out value="${productInfo.photo}"/>" >
+                                            <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
                                         </a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title"><c:out value="${productInfo.productName}"/></h3>
+                                        <h3 class="title"><c:out value="${product.key.productName}"/></h3>
                                         <div class="price">
-                                            <c:out value="${productInfo.price}"/>
+                                            <c:out value="${product.key.price}"/>
                                         </div>
-                                        <a class="add-to-cart" href="/order?userId=${userId}&productId=${productInfo.id}">Á¢¼´¹ºÂò</a>
+                                        <a class="add-to-cart" href="/order?userId=${userId}&productId=${product.key.productId}">Á¢¼´¹ºÂò</a>
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
                     </c:when>
                 </c:choose>
             </c:forEach>

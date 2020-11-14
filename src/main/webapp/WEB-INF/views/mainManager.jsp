@@ -41,14 +41,15 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">MSXT</a>
+        <a class="navbar-brand" href="<c:url value="/main/list/manager.html?managerId=${managerId}&managerName=${managerName}" />">MSXT</a>
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 <c:out value="${managerName}"/>
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="<c:url value="/product/list.html" />">商品管理</a>
+                <a class="dropdown-item" href="<c:url value="/product/list.html?managerId=${managerId}&managerName=${managerName}" />">商品管理</a>
                 <a class="dropdown-item">订单管理</a>
+                <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
         </div>
     </div>
@@ -74,48 +75,44 @@
             <c:forEach items="${allProduct}" var="product" >
                 <c:choose>
                     <c:when test="${product.value eq true}">
-                        <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">
                                 <div class="product-grid4">
                                     <div class="product-image4">
                                         <a href="#">
-                                            <img class="pic-1" src="<c:out value="${productInfo.photo}"/>" >
+                                            <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
                                         </a>
 
                                         <span class="product-new-label">秒杀开始</span>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title"><c:out value="${productInfo.productName}"/></h3>
+                                        <h3 class="title"><c:out value="${product.key.productName}"/></h3>
                                         <div class="price">
-                                            <c:out value="${productInfo.priceSpike}"/>
-                                            <span><c:out value="${productInfo.price}"/></span>
+                                            <c:out value="${product.key.priceSpike}"/>
+                                            <span><c:out value="${product.key.price}"/></span>
                                         </div>
-                                        <a class="add-to-cart" href="/order?userId=${managerId}&productId=${productInfo.id}">立即购买</a>
+                                        <a class="add-to-cart" href="/order?userId=${managerId}&productId=${product.key.productId}">立即购买</a>
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
                     </c:when>
 
                     <c:when test="${product.value eq false}">
-                        <c:forEach items="${product.key}" var="productInfo" >
                             <div class="col-md-3 col-sm-6">
                                 <div class="product-grid4">
                                     <div class="product-image4">
                                         <a href="#">
-                                            <img class="pic-1" src="<c:out value="${productInfo.photo}"/>" >
+                                            <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
                                         </a>
                                     </div>
                                     <div class="product-content">
-                                        <h3 class="title"><c:out value="${productInfo.productName}"/></h3>
+                                        <h3 class="title"><c:out value="${product.key.productName}"/></h3>
                                         <div class="price">
-                                            <c:out value="${productInfo.price}"/>
+                                            <c:out value="${product.key.price}"/>
                                         </div>
-                                        <a class="add-to-cart" href="/order?userId=${managerId}&productId=${productInfo.id}">立即购买</a>
+                                        <a class="add-to-cart" href="/order?userId=${managerId}&productId=${product.key.productId}">立即购买</a>
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
                     </c:when>
                 </c:choose>
             </c:forEach>

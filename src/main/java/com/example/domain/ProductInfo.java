@@ -3,7 +3,9 @@ package com.example.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 public class ProductInfo implements Serializable {
 
@@ -55,6 +57,28 @@ public class ProductInfo implements Serializable {
         this.priceSpike = priceSpike;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public ProductInfo(Product product) {
+        this.productId = product.getProductId();
+        this.productName = product.getProductName();
+        this.photo = product.getPhoto();
+        this.description = product.getDescription();
+        this.price = product.getPrice();
+        this.stock = product.getStock();
+        this.priceSpike = product.getPriceSpike();
+
+        LocalDateTime start_Time = Instant.ofEpochMilli( product.getStartTime().getTime() )
+                .atZone( ZoneId.systemDefault() )
+                .toLocalDateTime();
+
+        LocalDateTime end_Time = Instant.ofEpochMilli( product.getEndTime().getTime() )
+                .atZone( ZoneId.systemDefault() )
+                .toLocalDateTime();
+
+
+        this.startTime = start_Time;
+        this.endTime = end_Time;
     }
 
     public ProductInfo(){

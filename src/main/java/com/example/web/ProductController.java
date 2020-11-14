@@ -35,25 +35,27 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String show_Product_List(Model model) {
+    public String show_Product_List(HttpServletRequest request, Model model) {
         List<Pair<Product, Boolean>> all_Product = productService.getAllProducts();
         model.addAttribute("allProduct", all_Product);
         model.addAttribute(new ProductInfo());
+        model.addAttribute("managerId", request.getParameter("managerId"));
+        model.addAttribute("managerName", request.getParameter("managerName"));
 
         return "productManage";
     }
 
     @RequestMapping(value = "/list/add", method = RequestMethod.POST)
-    public String add_Product(ProductInfo productInfo) {
+    public String add_Product(ProductInfo productInfo, HttpServletRequest request, RedirectAttributes redirect) {
 
-        System.out.println("Name: "+productInfo.getProductName());
-        System.out.println("Photo: "+productInfo.getPhoto());
-        System.out.println("Description: "+productInfo.getDescription());
-        System.out.println("Price: "+productInfo.getPrice());
-        System.out.println("PriceSpike: "+productInfo.getPriceSpike());
-        System.out.println("Stock: "+productInfo.getStock());
-        System.out.println("StartTime: "+productInfo.getStartTime().toString());
-        System.out.println("EndTime: "+productInfo.getEndTime().toString());
+//        System.out.println("Name: "+productInfo.getProductName());
+//        System.out.println("Photo: "+productInfo.getPhoto());
+//        System.out.println("Description: "+productInfo.getDescription());
+//        System.out.println("Price: "+productInfo.getPrice());
+//        System.out.println("PriceSpike: "+productInfo.getPriceSpike());
+//        System.out.println("Stock: "+productInfo.getStock());
+//        System.out.println("StartTime: "+productInfo.getStartTime().toString());
+//        System.out.println("EndTime: "+productInfo.getEndTime().toString());
 
         LocalDateTime StartTime_local = productInfo.getStartTime();
         LocalDateTime EndTime_local = productInfo.getEndTime();
@@ -66,22 +68,37 @@ public class ProductController {
                         productInfo.getPrice(), productInfo.getStock(), productInfo.getPriceSpike(),
                 StartTime_Date, EndTime_Date);
 
+        redirect.addAttribute("managerId",request.getParameter("managerId"));
+        redirect.addAttribute("managerName",request.getParameter("managerName"));
         return "redirect:/product/list.html";
     }
 
 
     @RequestMapping(value = "/list/delete", method = RequestMethod.POST)
-    public String delete_Product(@RequestParam(value ="productId") int product_id) {
+    public String delete_Product(@RequestParam(value ="productId") int product_id, HttpServletRequest request, RedirectAttributes redirect) {
         productService.deleteProduct(product_id);
 
+        redirect.addAttribute("managerId",request.getParameter("managerId"));
+        redirect.addAttribute("managerName",request.getParameter("managerName"));
         return "redirect:/product/list.html";
     }
 
     @RequestMapping(value = "/list/fix", method = RequestMethod.POST)
-    public String fix_Product(Product product) {
-//        productService.updateProduct(product.getProductId(), product.getProductName(), product.getPhoto(), product.getDescription(),
-//                product.getPrice(), product.getStock(), product.getPriceSpike(),
-//                product.getStartTime(), product.getEndTime());
+    public String fix_Product(ProductInfo productInfo, HttpServletRequest request, RedirectAttributes redirect) {
+
+        LocalDateTime StartTime_local = productInfo.getStartTime();
+        LocalDateTime EndTime_local = productInfo.getEndTime();
+
+
+        Date StartTime_Date = Date.from( StartTime_local.atZone( ZoneId.systemDefault()).toInstant());
+        Date EndTime_Date = Date.from( EndTime_local.atZone( ZoneId.systemDefault()).toInstant());
+
+        productService.updateProduct(productInfo.getProductId(),productInfo.getProductName(), productInfo.getPhoto(), productInfo.getDescription(),
+                productInfo.getPrice(), productInfo.getStock(), productInfo.getPriceSpike(),
+                StartTime_Date, EndTime_Date);
+
+        redirect.addAttribute("managerId",request.getParameter("managerId"));
+        redirect.addAttribute("managerName",request.getParameter("managerName"));
         return "redirect:/product/list.html";
     }
 

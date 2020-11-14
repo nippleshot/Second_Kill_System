@@ -41,7 +41,18 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="<c:url value="/main/list.html" />">MSXT</a>
+        <a class="navbar-brand" href="<c:url value="/main/list/manager.html?managerId=${managerId}&managerName=${managerName}" />">MSXT</a>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <c:out value="${managerName}"/>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="<c:url value="/product/list.html?managerId=${managerId}&managerName=${managerName}" />">商品管理</a>
+                <a class="dropdown-item">订单管理</a>
+                <a class="dropdown-item" href="<c:url value="/main/list/manager.html?managerId=${managerId}&managerName=${managerName}" />">主页面</a>
+                <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -84,14 +95,17 @@
                         <td><c:out value="${productInfo.key.priceSpike}"/></td>
                         <td><c:out value="${productInfo.key.stock}"/></td>
                         <td class="text-center">
-                            <button class='btn btn-info btn-xs' data-toggle="modal" data-target="#product_fix" data-url="<c:out value="${productInfo.key.photo}"/>" data-name="<c:out value="${productInfo.key.productName}"/>" data-description="<c:out value="${productInfo.key.description}"/>" data-ori="<c:out value="${productInfo.key.price}"/>" data-sale="<c:out value="${productInfo.key.priceSpike}"/>" data-stock="<c:out value="${productInfo.key.stock}"/>" >
+                            <button class='btn btn-info btn-xs' data-toggle="modal" data-target="#product_fix" data-id="<c:out value="${productInfo.key.productId}"/>" data-url="<c:out value="${productInfo.key.photo}"/>" data-name="<c:out value="${productInfo.key.productName}"/>" data-description="<c:out value="${productInfo.key.description}"/>" data-ori="<c:out value="${productInfo.key.price}"/>" data-sale="<c:out value="${productInfo.key.priceSpike}"/>" data-stock="<c:out value="${productInfo.key.stock}"/>" >
                                 <span class="glyphicon glyphicon-edit"></span>
                                 修改
                             </button>
-                            <button class="btn btn-danger btn-xs" onClick="location.href='/mxst/product/list/delete.html?productId=<c:out value="${productInfo.key.productId}"/>'" type="submit" formmethod="post">
+                            <br/><br/>
+                            <sf:form method="POST" action="/mxst/product/list/delete.html?productId=${productInfo.key.productId}&managerId=${managerId}&managerName=${managerName}">
+                            <button class="btn btn-danger btn-xs" type="submit">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 删除
                             </button>
+                            </sf:form>
                         </td>
                     </tr>
                 </c:forEach>
@@ -109,7 +123,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <sf:form method="POST" action="/mxst/product/list/add.html" commandName="productInfo">
+                        <sf:form method="POST" action="/mxst/product/list/add.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
                         <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>
@@ -210,7 +224,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <sf:form method="POST" action="/mxst/product/list/fix.html" commandName="productInfo">
+                        <sf:form method="POST" action="/mxst/product/list/fix.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
+
+                            <sf:input path="productId" type="hidden" id="product_id"/>
                         <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>
@@ -356,6 +372,7 @@
 <script>
     $('#product_fix').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id')
         var photo = button.data('url') // Extract info from data-* attributes
         var product_name = button.data('name')
         var description = button.data('description')
@@ -365,6 +382,7 @@
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
+        modal.find('.modal-body #product_id').val(id)
         modal.find('.modal-body #photo').val(photo)
         modal.find('.modal-body #product_name').val(product_name)
         modal.find('.modal-body #description').val(description)

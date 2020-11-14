@@ -59,7 +59,7 @@ public class MainListController {
     }
 
     @RequestMapping(value = "/list/manager", method = RequestMethod.GET)
-    public String mainList_manager(HttpServletRequest request,Model model) {
+    public String mainList_manager(HttpServletRequest request, Model model) {
         model.addAttribute("managerId", request.getParameter("managerId"));
         model.addAttribute("managerName", request.getParameter("managerName"));
         model.addAttribute("allProduct",productService.getAllProducts());
