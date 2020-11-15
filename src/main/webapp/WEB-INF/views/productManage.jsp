@@ -70,7 +70,7 @@
                     <th>图片</th>
                     <th>商品名</th>
                     <th>商品简介</th>
-                    <th style="width: 15%;">秒杀开始/结束时间</th>
+                    <th style="width: 18%;">秒杀开始/结束时间</th>
                     <th>原价</th>
                     <th>折扣价</th>
                     <th>存库量</th>
@@ -125,7 +125,7 @@
                     <div class="row">
                         <sf:form method="POST" action="/msxt/product/list/add.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
                         <div class="col-md-12 product_content">
-                            <table class="table table-striped custab">
+                            <table class="table table-striped custab" style="width: 80%;">
                                 <thead>
                                 <tr>
                                     <th> </th>
@@ -228,7 +228,7 @@
 
                             <sf:input path="productId" type="hidden" id="product_id"/>
                         <div class="col-md-12 product_content">
-                            <table class="table table-striped custab">
+                            <table class="table table-striped custab" style="width: 80%;">
                                 <thead>
                                 <tr>
                                     <th> </th>

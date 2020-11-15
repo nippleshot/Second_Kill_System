@@ -7,7 +7,6 @@ import com.example.service.OrderService;
 import com.example.service.ProductService;
 import com.example.service.UserService;
 import javafx.util.Pair;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,21 +19,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping(value = "/order")
-public class OrderController {
+public class OrderController{
 
     OrderService orderService;
     ProductService productService;
     UserService userService;
 
     private static final String SUCCESS_MSG = "Order succeed";
+    private static final String INVALID_KEY_ERROR = "Invalid Order";
     private static final String PAYMENT_ERROR = "Order failed : Not enough account";
     private static final String PRODUCT_STOCK_ERROR = "Order failed : Not have enough stock";
 
@@ -46,7 +46,7 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String show_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public String show_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, Model model, HttpServletResponse response, HttpServletRequest request, RedirectAttributes redirect) throws IOException {
         if(request.getParameter("msg")!=null){
             model.addAttribute("msg",request.getParameter("msg"));
             response.setContentType("text/html; charset=UTF-8");
@@ -56,6 +56,16 @@ public class OrderController {
         }
 
         Pair<Product, Boolean> product_Info = productService.findProductByProductId(product_id);
+
+        if(Integer.parseInt(request.getParameter("randomKey")) != product_Info.getKey().getRandomKey()){
+            User user = userService.findUserByUserId(user_id);
+            redirect.addAttribute("userId", user.getUserId());
+            redirect.addAttribute("userName", user.getUserName());
+            redirect.addAttribute("userBalance", user.getBalance());
+            redirect.addAttribute("msg", INVALID_KEY_ERROR);
+            return "redirect:/main/list/user.html";
+        }
+
         boolean is_Seckill_Start = product_Info.getValue();
         int productId = product_Info.getKey().getProductId();
         String productName = product_Info.getKey().getProductName();
@@ -65,7 +75,6 @@ public class OrderController {
         int stock = product_Info.getKey().getStock();
         double priceSpike = product_Info.getKey().getPriceSpike();
 
-        LocalDate start_Date = convertToLocalDateViaInstant(product_Info.getKey().getStartTime());
         LocalDate end_Date = convertToLocalDateViaInstant(product_Info.getKey().getEndTime());
         LocalDate now = LocalDate.now();
 
@@ -103,11 +112,6 @@ public class OrderController {
                 .toLocalDate();
     }
 
-    public LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public String make_Order(@RequestParam(value ="userId") int user_id, Order order, RedirectAttributes redirect) {

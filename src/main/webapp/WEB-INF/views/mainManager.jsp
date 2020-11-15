@@ -74,46 +74,90 @@
 
             <c:forEach items="${allProduct}" var="product" >
                 <c:choose>
-                    <c:when test="${product.value eq true}">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="product-grid4">
-                                    <div class="product-image4">
-                                        <a href="#">
-                                            <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
-                                        </a>
+                    <c:when test="${product.value == 1}">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid4">
+                                <div class="product-image4">
+                                    <a href="#">
+                                        <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
+                                    </a>
 
-                                        <span class="product-new-label">秒杀开始</span>
+                                    <span class="product-new-label">秒杀开始</span>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><c:out value="${product.key.productName}"/></h3>
+                                    <div class="price">
+                                        <c:out value="${product.key.priceSpike}"/>
+                                        <span><c:out value="${product.key.price}"/></span>
                                     </div>
-                                    <div class="product-content">
-                                        <h3 class="title"><c:out value="${product.key.productName}"/></h3>
-                                        <div class="price">
-                                            <c:out value="${product.key.priceSpike}"/>
-                                            <span><c:out value="${product.key.price}"/></span>
-                                        </div>
-                                        <a class="add-to-cart">可以购买</a>
-                                    </div>
+                                    <a class="add-to-cart">活动开始</a>
                                 </div>
                             </div>
+                        </div>
                     </c:when>
 
-                    <c:when test="${product.value eq false}">
-                            <div class="col-md-3 col-sm-6">
-                                <div class="product-grid4">
-                                    <div class="product-image4">
-                                        <a href="#">
-                                            <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
-                                        </a>
+                    <c:when test="${product.value == 2}">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid4">
+                                <div class="product-image4">
+                                    <a href="#">
+                                        <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
+                                    </a>
+
+                                    <span class="product-new-label">已售罄</span>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><c:out value="${product.key.productName}"/></h3>
+                                    <div class="price">
+                                        <c:out value="${product.key.priceSpike}"/>
+                                        <span><c:out value="${product.key.price}"/></span>
                                     </div>
-                                    <div class="product-content">
-                                        <h3 class="title"><c:out value="${product.key.productName}"/></h3>
-                                        <div class="price">
-                                            <c:out value="${product.key.price}"/>
-                                        </div>
-                                        <a class="add-to-cart">还没开始</a>
-                                    </div>
+                                    <a class="add-to-cart">已售罄</a>
                                 </div>
                             </div>
+                        </div>
                     </c:when>
+
+                    <c:when test="${product.value == 3}">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid4">
+                                <div class="product-image4">
+                                    <a href="#">
+                                        <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><c:out value="${product.key.productName}"/></h3>
+                                    <div class="price">
+                                        <c:out value="${product.key.priceSpike}"/>
+                                        <span><c:out value="${product.key.price}"/></span>
+                                    </div>
+                                    <a style="color:#ff8400;">活动结束</a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:when>
+
+                    <c:when test="${product.value == 4}">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="product-grid4">
+                                <div class="product-image4">
+                                    <a href="#">
+                                        <img class="pic-1" src="<c:out value="${product.key.photo}"/>" >
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="title"><c:out value="${product.key.productName}"/></h3>
+                                    <div class="price">
+                                        <c:out value="${product.key.priceSpike}"/>
+                                        <span><c:out value="${product.key.price}"/></span>
+                                    </div>
+                                    <a style="color:#00b35c;">活动没开</a>
+                                </div>
+                            </div>
+                        </div>
+                    </c:when>
+
                 </c:choose>
             </c:forEach>
         </div>
