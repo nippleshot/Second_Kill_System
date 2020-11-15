@@ -21,10 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneId;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -67,25 +65,20 @@ public class OrderController {
         int stock = product_Info.getKey().getStock();
         double priceSpike = product_Info.getKey().getPriceSpike();
 
-        LocalDateTime start_Time = Instant.ofEpochMilli( product_Info.getKey().getStartTime().getTime() )
-                .atZone( ZoneId.systemDefault() )
-                .toLocalDateTime();
-
-        LocalDateTime end_Time = Instant.ofEpochMilli( product_Info.getKey().getEndTime().getTime() )
-                .atZone( ZoneId.systemDefault() )
-                .toLocalDateTime();
-
-        LocalDateTime now = Instant.ofEpochMilli( new Date().getTime() )
-                .atZone( ZoneId.systemDefault() )
-                .toLocalDateTime();
-
-        //Period period = now.until(end_Time);
+        LocalDate start_Date = convertToLocalDateViaInstant(product_Info.getKey().getStartTime());
+        LocalDate end_Date = convertToLocalDateViaInstant(product_Info.getKey().getEndTime());
+        LocalDate now = LocalDate.now();
 
         if(is_Seckill_Start){
-            Date time_Left = new Date();
-            SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-
-            model.addAttribute("timeLeft", time_Left);
+            if(now.isBefore(end_Date)){
+                long date_period = now.until(end_Date, ChronoUnit.DAYS);
+                model.addAttribute("isDay", true);
+                model.addAttribute("dayLeft", date_period+"天");
+            }else if(now.isEqual(end_Date)){
+                long time_period = (product_Info.getKey().getEndTime().getTime()-new Date().getTime())/1000;
+                System.out.println("time_period " +time_period);
+                model.addAttribute("timeLeft", time_period);
+            }
         }
 
 
@@ -102,6 +95,18 @@ public class OrderController {
         model.addAttribute("stock", stock);
         model.addAttribute("priceSpike", priceSpike);
         return "order";
+    }
+
+    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+    }
+
+    public LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 
     @RequestMapping(method = RequestMethod.POST)

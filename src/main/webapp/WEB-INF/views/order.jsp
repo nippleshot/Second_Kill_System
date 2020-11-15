@@ -140,7 +140,39 @@
                                                         实付款 ： <sf:input path="totalPrice" type="number" id="total-price" value="0.00" style="width:150px;color:#007bff" readonly="true"/>
                                                     </div>
 
-                                                    <div class="col-xs-4" style="color:#f06666;margin-left:20px"> 剩下时间 </br> <span style="font-size:25px;font-weight:500" id="countdown">23:23:20</span> </div>
+                                                    <c:choose>
+                                                        <c:when test="${isDay eq true}">
+                                                            <div class="col-xs-4" style="color:#f06666;margin-left:20px"> 剩下期间 </br> <span style="font-size:25px;font-weight:500" >${dayLeft}</span> </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <div class="col-xs-4" style="color:#f06666;margin-left:20px">
+                                                                剩下时间
+                                                                </br>
+                                                                <span style="font-size:25px;font-weight:500" id="countdown">
+
+                                                                </span>
+                                                            </div>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+                                                    <script>
+                                                        var second = ${timeLeft};
+                                                        var timer = setInterval(function(){
+                                                            secToFulltime(second);
+                                                            second = second-1;
+                                                        }, 1000)
+
+                                                        function secToFulltime(seconds) {
+
+                                                            var hour = parseInt(seconds/3600);
+                                                            var min = parseInt((seconds%3600)/60);
+                                                            var sec = seconds%60;
+
+                                                            document.getElementById("countdown").innerHTML = hour+":"+min+":" + sec
+                                                        }
+
+
+                                                    </script>
                                                 </div>
 
 
