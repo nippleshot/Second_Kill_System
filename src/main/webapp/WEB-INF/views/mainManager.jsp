@@ -132,7 +132,7 @@
                                         <c:out value="${product.key.priceSpike}"/>
                                         <span><c:out value="${product.key.price}"/></span>
                                     </div>
-                                    <a style="color:#ff8400;">活动结束</a>
+                                    <a class="add-to-cart">活动结束</a>
                                 </div>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                                         <c:out value="${product.key.priceSpike}"/>
                                         <span><c:out value="${product.key.price}"/></span>
                                     </div>
-                                    <a style="color:#00b35c;">活动没开</a>
+                                    <a class="add-to-cart">活动没开</a>
                                 </div>
                             </div>
                         </div>

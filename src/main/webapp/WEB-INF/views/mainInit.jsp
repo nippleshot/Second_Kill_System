@@ -123,7 +123,7 @@
                                         <c:out value="${product.key.priceSpike}"/>
                                         <span><c:out value="${product.key.price}"/></span>
                                     </div>
-                                    <a style="color:#ff8400;" href="void(0);" onClick='alert("请登录/注册"); return false'>活动结束</a>
+                                    <a class="add-to-cart" href="void(0);" onClick='alert("请登录/注册"); return false'>活动结束</a>
                                 </div>
                             </div>
                         </div>
@@ -143,7 +143,7 @@
                                         <c:out value="${product.key.priceSpike}"/>
                                         <span><c:out value="${product.key.price}"/></span>
                                     </div>
-                                    <a style="color:#00b35c;" href="void(0);" onClick='alert("请登录/注册"); return false'>活动没开</a>
+                                    <a class="add-to-cart" href="void(0);" onClick='alert("请登录/注册"); return false'>活动没开</a>
                                 </div>
                             </div>
                         </div>
