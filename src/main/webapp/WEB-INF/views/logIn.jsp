@@ -68,7 +68,7 @@
         <div class="form">
             <div class="sign-in" id="sign-in-info">
                 <h1>µÇÂ¼</h1>
-                    <sf:form method="POST" action="/mxst/user/login.html" id="sign-in-form" commandName="user" >
+                    <sf:form method="POST" action="/msxt/user/login.html" id="sign-in-form" commandName="user" >
                         <sf:input path="userName" type="text" placeholder="ÕËºÅÃû"/>
                         <sf:input path="password" type="password" placeholder="ÃÜÂë"/>
                         <button class="control-button in" type="submit">µÇÂ¼</button>
@@ -77,7 +77,7 @@
 
             <div class="sign-up" id="sign-up-info">
                 <h1>ÕËºÅ×¢²á</h1>
-                <sf:form method="POST" action="/mxst/user/register.html" id="sign-up-form" commandName="user">
+                <sf:form method="POST" action="/msxt/user/register.html" id="sign-up-form" commandName="user">
                     <sf:input path="userName" type="text" placeholder="ÕËºÅÃû"/>
                     <sf:input path="password" type="password" placeholder="ÃÜÂë"/>
                     <button class="control-button up" type="submit">×¢²á</button>

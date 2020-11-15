@@ -100,7 +100,7 @@
                                 ÐÞ¸Ä
                             </button>
                             <br/><br/>
-                            <sf:form method="POST" action="/mxst/product/list/delete.html?productId=${productInfo.key.productId}&managerId=${managerId}&managerName=${managerName}">
+                            <sf:form method="POST" action="/msxt/product/list/delete.html?productId=${productInfo.key.productId}&managerId=${managerId}&managerName=${managerName}">
                             <button class="btn btn-danger btn-xs" type="submit">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 É¾³ý
@@ -123,7 +123,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <sf:form method="POST" action="/mxst/product/list/add.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
+                        <sf:form method="POST" action="/msxt/product/list/add.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
                         <div class="col-md-12 product_content">
                             <table class="table table-striped custab">
                                 <thead>
@@ -224,7 +224,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <sf:form method="POST" action="/mxst/product/list/fix.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
+                        <sf:form method="POST" action="/msxt/product/list/fix.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
 
                             <sf:input path="productId" type="hidden" id="product_id"/>
                         <div class="col-md-12 product_content">

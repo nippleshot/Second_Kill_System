@@ -155,7 +155,7 @@
                 <configuration>
                     <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
                     <scanIntervalSeconds>3</scanIntervalSeconds>
-                    <contextPath>/mxst</contextPath>
+                    <contextPath>/msxt</contextPath>
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
                             <port>8088</port>

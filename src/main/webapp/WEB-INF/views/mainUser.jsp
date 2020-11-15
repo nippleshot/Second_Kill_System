@@ -48,7 +48,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item">我的余额 ： <c:out value="${userBalance}"/> </a>
-                <a class="dropdown-item" href="/mxst/user/charge.html?userId=${userId}">充值金额</a>
+                <a class="dropdown-item" href="/msxt/user/charge.html?userId=${userId}">充值金额</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
         </div>
@@ -91,7 +91,7 @@
                                             <c:out value="${product.key.priceSpike}"/>
                                             <span><c:out value="${product.key.price}"/></span>
                                         </div>
-                                        <a class="add-to-cart" href="/mxst/order.html?userId=${userId}&productId=${product.key.productId}">立即购买</a>
+                                        <a class="add-to-cart" href="/msxt/order.html?userId=${userId}&productId=${product.key.productId}">立即购买</a>
                                     </div>
                                 </div>
                             </div>

@@ -58,7 +58,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item">我的余额 ： <c:out value="${userBalance}"/> </a>
-                <a class="dropdown-item" href="/mxst/user/charge.html?userId=${userId}">充值金额</a>
+                <a class="dropdown-item" href="/msxt/user/charge.html?userId=${userId}">充值金额</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
         </div>
@@ -87,7 +87,7 @@
                             <!--Order Area-->
                             <div class="col-md-6">
                                 <div class="single-product-content">
-                                        <sf:form method="post" commandName="order" id="AddToCartForm" class="shopify-product-form" action="/mxst/order.html?userId=${userId}">
+                                        <sf:form method="post" commandName="order" id="AddToCartForm" class="shopify-product-form" action="/msxt/order.html?userId=${userId}">
                                             <sf:input path="productId" type="hidden" value="${productId}"/>
                                             <div class="product-details">
                                             <h1 class="single-product-name">${productName}</h1>

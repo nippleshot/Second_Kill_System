@@ -49,7 +49,7 @@
 <section class="features-icons bg-light text-center">
     <div class="container">
         <div class="form">
-            <sf:form method="POST" action="/mxst/user/charge.html" id="sign-up-form" commandName="user">
+            <sf:form method="POST" action="/msxt/user/charge.html" id="sign-up-form" commandName="user">
                 <sf:input path="userId" type="hidden" value="${userId}"/>
                 <br/><br/><br/><br/><br/>
                 <h3>œ÷‘⁄”‡∂Ó £∫ ${userBalance}</h3>
