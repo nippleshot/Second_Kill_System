@@ -95,6 +95,7 @@ public class OrderDao {
         }
     }
 
+
     public List<Order> findAllCompletedOrder() {
         String sqlStr = "SELECT * FROM t_order WHERE is_paid=true";
         return jdbcTemplate.query(sqlStr, (resultSet, i) -> {

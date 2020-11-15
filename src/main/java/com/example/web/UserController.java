@@ -1,6 +1,8 @@
 package com.example.web;
 
+import com.example.domain.Order;
 import com.example.domain.User;
+import com.example.service.OrderService;
 import com.example.service.ProductService;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 
 @Controller
@@ -24,16 +27,21 @@ import java.io.PrintWriter;
 public class UserController {
 
     private UserService userService;
+    private OrderService orderService;
 
     private static final String USER_NAME_EXIST_MSG = "Register input is already exist";
     private static final String LOGIN_FAIL_MSG = "Inappropriate Login input";
     private static final String CHARGE_ERROR_MSG = "You should charge more than 0";
     private static final String REGISTER_SUCCESS = "Register Succeed";
     private static final String CHARGE_SUCCESS = "Charge Succeed";
+    private static final String USER_ACCUNT_ERROR = "Payment Failed : Your Account is not enough";
+    private static final String NO_STOCK_ERROR = "Payment Failed : No inventory";
+    private static final String PAYMENT_SUCCESS = "Paid Succeed";
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -135,6 +143,49 @@ public class UserController {
         redirect.addAttribute("userBalance", after_charge.getBalance());
         redirect.addAttribute("msg", CHARGE_SUCCESS);
         return "redirect:/main/list/user.html";
+    }
+
+    @RequestMapping(value = "/myList", method = RequestMethod.GET)
+    public String charge(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        if(request.getParameter("msg")!=null){
+            model.addAttribute("msg",request.getParameter("msg"));
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('"+request.getParameter("msg")+"'); history.go(1);</script>");
+            out.flush();
+        }
+
+        model.addAttribute("userId", request.getParameter("userId"));
+        model.addAttribute("userName", request.getParameter("userName"));
+        model.addAttribute("userBalance", request.getParameter("userBalance"));
+        List<Order> orders = orderService.findOrderByUserId(Integer.parseInt(request.getParameter("userId")));
+        model.addAttribute("orders", orders);
+
+
+        return "orderListUser";
+    }
+
+    @RequestMapping(value = "/myList", method = RequestMethod.POST)
+    public String charge(HttpServletRequest request, Model model, RedirectAttributes redirect){
+
+        int user_id = Integer.parseInt(request.getParameter("userId"));
+        int order_Id = Integer.parseInt(request.getParameter("orderId"));
+        int pay_result = orderService.payForOrder(user_id, order_Id);
+
+        if(pay_result==OrderService.BALANCE_NOT_ADEQUATE){
+            redirect.addAttribute("msg", USER_ACCUNT_ERROR);
+        }else if(pay_result==OrderService.STOCK_NOT_ADEQUATE){
+            redirect.addAttribute("msg", NO_STOCK_ERROR);
+        }else{
+            redirect.addAttribute("msg", PAYMENT_SUCCESS);
+        }
+
+        User user = userService.findUserByUserId(user_id);
+        redirect.addAttribute("userId", user_id);
+        redirect.addAttribute("userName", user.getUserName());
+        redirect.addAttribute("userBalance", user.getBalance());
+
+        return "redirect:/user/myList.html";
     }
 
 

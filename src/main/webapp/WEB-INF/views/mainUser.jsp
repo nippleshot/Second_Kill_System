@@ -49,6 +49,7 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item">我的余额 ： <c:out value="${userBalance}"/> </a>
                 <a class="dropdown-item" href="/msxt/user/charge.html?userId=${userId}">充值金额</a>
+                <a class="dropdown-item" href="/msxt/user/myList.html?userId=${userId}&userName=${userName}&userBalance=${userBalance}">我的订单</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
         </div>
