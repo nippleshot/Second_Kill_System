@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.domain.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -73,20 +74,25 @@ public class OrderDao {
 
     public Order findOrderByUserIdAndTime(int userId, Date createTime) {
         String sqlStr = "SELECT * FROM t_order WHERE user_id=? AND create_time=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, createTime}, (resultSet, i) -> {
-            Order order = new Order(
-                    resultSet.getInt("product_id"),
-                    resultSet.getInt("user_id"),
-                    resultSet.getInt("num"),
-                    resultSet.getDouble("total_price"),
-                    resultSet.getString("consignee"),
-                    resultSet.getString("telephone_number"),
-                    resultSet.getString("address"),
-                    resultSet.getDate("create_time"));
-            order.setOrderId(resultSet.getInt("order_id"));
-            order.setPaid(resultSet.getBoolean("is_paid"));
-            return order;
-        });
+
+        try {
+            return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId, createTime}, (resultSet, i) -> {
+                Order order = new Order(
+                        resultSet.getInt("product_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("num"),
+                        resultSet.getDouble("total_price"),
+                        resultSet.getString("consignee"),
+                        resultSet.getString("telephone_number"),
+                        resultSet.getString("address"),
+                        resultSet.getDate("create_time"));
+                order.setOrderId(resultSet.getInt("order_id"));
+                order.setPaid(resultSet.getBoolean("is_paid"));
+                return order;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<Order> findAllCompletedOrder() {
@@ -109,20 +115,24 @@ public class OrderDao {
 
     public Order findOrderByOrderId(int orderId) {
         String sqlStr = "SELECT * FROM t_order WHERE order_id=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{orderId}, (resultSet, i) -> {
-            Order order = new Order(
-                    resultSet.getInt("product_id"),
-                    resultSet.getInt("user_id"),
-                    resultSet.getInt("num"),
-                    resultSet.getDouble("total_price"),
-                    resultSet.getString("consignee"),
-                    resultSet.getString("telephone_number"),
-                    resultSet.getString("address"),
-                    resultSet.getTimestamp("create_time"));
-            order.setOrderId(resultSet.getInt("order_id"));
-            order.setPaid(resultSet.getBoolean("is_paid"));
-            return order;
-        });
+        try {
+            return jdbcTemplate.queryForObject(sqlStr, new Object[]{orderId}, (resultSet, i) -> {
+                Order order = new Order(
+                        resultSet.getInt("product_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("num"),
+                        resultSet.getDouble("total_price"),
+                        resultSet.getString("consignee"),
+                        resultSet.getString("telephone_number"),
+                        resultSet.getString("address"),
+                        resultSet.getTimestamp("create_time"));
+                order.setOrderId(resultSet.getInt("order_id"));
+                order.setPaid(resultSet.getBoolean("is_paid"));
+                return order;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public void insertOrder(Order order) {
