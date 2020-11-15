@@ -47,15 +47,21 @@ public class OrderService {
     }
 
     /**
-     * 为订单付款，完成订单
+     * 为订单付款，完成订单，设为同步方法避免数据库并发读写导致的问题
      */
-    public int payForOrder(int userId, int orderId) {
+    public synchronized int payForOrder(int userId, int orderId) {
         User user = userDao.findUserById(userId);
         Order order = orderDao.findOrderByOrderId(orderId);
+        Product product = productDao.findProduct(order.getProductId());
         if (user.getBalance() < order.getTotalPrice())
             return BALANCE_NOT_ADEQUATE;
+        if (product.getStock() < order.getNum())
+            return STOCK_NOT_ADEQUATE;
         double balance = user.getBalance() - order.getTotalPrice();
+        int stock = product.getStock() - order.getNum();
+        product.setStock(stock);
         userDao.updateBalance(balance, userId);
+        productDao.updateProduct(product);
         orderDao.payForOrder(orderId);
         return SUCCESS_PAID;
     }
