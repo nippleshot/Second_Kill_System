@@ -21,7 +21,8 @@ CREATE TABLE t_product (
     stock INT,
     price_spike DOUBLE,
     start_time DATETIME,
-    end_time DATETIME
+    end_time DATETIME,
+    random_key INT
 )ENGINE=InnoDB;
 
 ##创建订单表
@@ -39,6 +40,6 @@ CREATE TABLE t_order (
 )ENGINE=InnoDB;
 
 ##插入初始化数据
-INSERT INTO t_user (user_name,password, privilege)
-             VALUES('admin','123456', 1);
+INSERT INTO t_user (user_name,password, privilege,balance)
+             VALUES('admin','123456',1,0);
 COMMIT;

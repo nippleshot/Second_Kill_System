@@ -30,6 +30,7 @@ public class ProductDao {
                         resultSet.getTimestamp("start_time"),
                         resultSet.getTimestamp("end_time"));
                 temp.setProductId(resultSet.getInt("product_id"));
+                temp.setRandomKey(resultSet.getInt("random_key"));
                 return temp;
             });
         } catch (EmptyResultDataAccessException e) {
@@ -49,17 +50,18 @@ public class ProductDao {
                     resultSet.getTimestamp("start_time"),
                     resultSet.getTimestamp("end_time"));
             product.setProductId(resultSet.getInt("product_id"));
+            product.setRandomKey(resultSet.getInt("random_key"));
             return product;
         });
     }
 
     public void insertProduct(Product product) {
         String sqlStr = "INSERT INTO t_product(product_name,photo,description,price,stock," +
-                "price_spike,start_time,end_time) " +
-                "VALUES(?,?,?,?,?,?,?,?)";
+                "price_spike,start_time,end_time,random_key) " +
+                "VALUES(?,?,?,?,?,?,?,?,?)";
         Object[] args = {product.getProductName(), product.getPhoto(), product.getDescription(),
                 product.getPrice(), product.getStock(), product.getPriceSpike(),
-                product.getStartTime(), product.getEndTime()};
+                product.getStartTime(), product.getEndTime(), product.getRandomKey()};
         jdbcTemplate.update(sqlStr, args);
     }
 

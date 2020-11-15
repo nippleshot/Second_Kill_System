@@ -24,6 +24,7 @@ public class ProductService {
                               Date endTime) {
         Product product = new Product(productName, photo, description, price,
                 stock, priceSpike, startTime, endTime);
+        product.setRandomKey((int) (Math.random() * 100) + 1);
         productDao.insertProduct(product);
     }
 
@@ -36,13 +37,14 @@ public class ProductService {
         Date startTime = product.getStartTime();
         Date endTime = product.getEndTime();
         Pair<Product, Boolean> res;
-        if (now.getTime() >= startTime.getTime() && now.getTime() <= endTime.getTime())
+        if (now.getTime() >= startTime.getTime() && now.getTime() <= endTime.getTime() && product.getStock() > 0) {
             res = new Pair<>(product, true);
-        else {
+        } else {
 //            System.out.println(productId);
 //            System.out.println(now);
 //            System.out.println(startTime);
 //            System.out.println(endTime);
+            product.setRandomKey(0);
             res = new Pair<>(product, false);
         }
         return res;
@@ -55,16 +57,17 @@ public class ProductService {
         List<Product> products = productDao.getAllProduct();
         ArrayList<Pair<Product, Boolean>> res = new ArrayList<>();
         Date now = new Date();
-        for(Product product : products) {
+        for (Product product : products) {
             Date startTime = product.getStartTime();
             Date endTime = product.getEndTime();
-            if (now.getTime() >= startTime.getTime() && now.getTime() <= endTime.getTime())
+            if (now.getTime() >= startTime.getTime() && now.getTime() <= endTime.getTime() && product.getStock() > 0)
                 res.add(new Pair<>(product, true));
             else {
 //                System.out.println(product.getProductId());
 //                System.out.println(now);
 //                System.out.println(startTime);
 //                System.out.println(endTime);
+                product.setRandomKey(0);
                 res.add(new Pair<>(product, false));
             }
         }

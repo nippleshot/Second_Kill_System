@@ -26,6 +26,8 @@ public class Product implements Serializable {
 
     private Date endTime; // 秒杀结束时间
 
+    private int randomKey; // 自动生成的随机数，秒杀开始才可以获得
+
 
     public Product(String productName, String photo, String description, double price,
                    int stock, double priceSpike, Date startTime, Date endTime) {
@@ -131,4 +133,11 @@ public class Product implements Serializable {
         this.endTime = endTime;
     }
 
+    public int getRandomKey() {
+        return randomKey;
+    }
+
+    public void setRandomKey(int randomKey) {
+        this.randomKey = randomKey;
+    }
 }
