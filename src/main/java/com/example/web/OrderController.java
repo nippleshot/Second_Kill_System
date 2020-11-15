@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +31,9 @@ public class OrderController {
     ProductService productService;
     UserService userService;
 
-    private static final String SUCCESS_MSG = "购买成功";
-    private static final String PAYMENT_ERROR = "您的余额不够的";
-    private static final String PRODUCT_STOCK_ERROR = "该产品数量不够的";
+    private static final String SUCCESS_MSG = "Order succeed";
+    private static final String PAYMENT_ERROR = "Order failed : Not enough account";
+    private static final String PRODUCT_STOCK_ERROR = "Order failed : Not have enough stock";
 
     @Autowired
     public OrderController(OrderService orderService, ProductService productService, UserService userService) {
@@ -39,8 +42,15 @@ public class OrderController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
-    public String show_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, Model model) {
+    @RequestMapping(method = RequestMethod.GET)
+    public String show_Order(@RequestParam(value ="userId") int user_id, @RequestParam(value ="productId") int product_id, Model model, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        if(request.getParameter("msg")!=null){
+            model.addAttribute("msg",request.getParameter("msg"));
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('"+request.getParameter("msg")+"');</script>");
+            out.flush();
+        }
 
         Pair<Product, Boolean> product_Info = productService.findProductByProductId(product_id);
         boolean is_Seckill_Start = product_Info.getValue();
@@ -61,7 +71,10 @@ public class OrderController {
             model.addAttribute("timeLeft", time_Left);
         }
 
+
         model.addAttribute("userId",user_id);
+        model.addAttribute("userName",userService.findUserByUserId(user_id).getUserName());
+        model.addAttribute("userBalance",userService.findUserByUserId(user_id).getBalance());
         model.addAttribute(new Order());
         model.addAttribute("isStart",is_Seckill_Start);
         model.addAttribute("productId",productId);
@@ -71,8 +84,7 @@ public class OrderController {
         model.addAttribute("price", price);
         model.addAttribute("stock", stock);
         model.addAttribute("priceSpike", priceSpike);
-
-        return "orderList";
+        return "order";
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -92,16 +104,21 @@ public class OrderController {
             int is_Payment_Succ = orderService.payForOrder(user_id, new_Order.getOrderId());
             if(is_Payment_Succ == OrderService.BALANCE_NOT_ADEQUATE){
                 // PAYMENT_ERROR
-                return "redirect:/order?userId="+user_id+"&productId="+product_id;
+                redirect.addAttribute("msg", PAYMENT_ERROR);
+                return "redirect:/order.html?userId="+user_id+"&productId="+product_id;
             }else{
                 // SUCCESS_MSG
                 User user = userService.findUserByUserId(user_id);
-                redirect.addAttribute("user", user);
-                return "redirect:/main/list/user";
+                redirect.addAttribute("userId", user.getUserId());
+                redirect.addAttribute("userName", user.getUserName());
+                redirect.addAttribute("userBalance", user.getBalance());
+                redirect.addAttribute("msg", SUCCESS_MSG);
+                return "redirect:/main/list/user.html";
             }
         }else{
             // PRODUCT_STOCK_ERROR
-            return "redirect:/order?userId="+user_id+"&productId="+product_id;
+            redirect.addAttribute("msg",  PRODUCT_STOCK_ERROR);
+            return "redirect:/order.html?userId="+user_id+"&productId="+product_id;
         }
     }
 

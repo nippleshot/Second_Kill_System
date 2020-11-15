@@ -51,8 +51,17 @@
 <!-- Navigation -->
 <nav class="navbar navbar-light bg-light static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">MSXT</a>
-        <a class="btn btn-primary" href="#">登录 / 注册</a>
+        <a class="navbar-brand" href="<c:url value="/main/list/user.html?userId=${userId}&userName=${userName}&userBalance=${userBalance}" />">MSXT</a>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <c:out value="${userName}"/>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item">我的余额 ： <c:out value="${userBalance}"/> </a>
+                <a class="dropdown-item" href="/mxst/user/charge.html?userId=${userId}">充值金额</a>
+                <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
+            </div>
+        </div>
     </div>
 </nav>
 
@@ -78,24 +87,15 @@
                             <!--Order Area-->
                             <div class="col-md-6">
                                 <div class="single-product-content">
-                                        <sf:form method="POST" id="AddToCartForm" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data" action="/mxst/product/list/add.html?managerId=${managerId}&managerName=${managerName}" commandName="order">
+                                        <sf:form method="POST" id="AddToCartForm" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data" action="/mxst/order.html?userId=${userId}" commandName="order">
                                         <div class="product-details">
                                             <h1 class="single-product-name">${productName}</h1>
                                             <div class="product-sku">商品号: <span class="variant-sku">${productId}</span></div>
                                             <div class="single-product-price">
                                                 <div class="price">
-                                                    <c:choose>
-                                                        <c:when test="${isStart eq true}">
-                                                            <input hidden="true" id="product-sale-price" value="${priceSpike}"/>
-                                                            ?${priceSpike}
-                                                            <span>?${price}</span>
-                                                        </c:when>
-
-                                                        <c:otherwise>
-                                                            <input hidden="true" id="product-sale-price" value="${price}"/>
-                                                            ?${price}
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                    <input hidden="true" id="product-sale-price" value="${priceSpike}"/>
+                                                    ${priceSpike}元
+                                                    <span>${price}元</span>
                                                 </div>
 
                                             </div>
@@ -106,7 +106,7 @@
                                                 <div class="product-add-to-cart">
                                                     <span class="control-label">数量</span>
                                                     <div class="cart-plus-minus" style="float:left;">
-                                                        <sf:input path="num" class="cart-plus-minus-box" id="quantity" type="number" min="0" name="quantity" value="0" readonly required/>
+                                                        <sf:input path="num" class="cart-plus-minus-box" id="quantity" type="number" min="0" name="quantity" value="0" readonly="true" required="required"/>
                                                     </div>
                                                     <div>
                                                         <input type="button" value="+" style="background:#708090;color:white" onclick="cal_add()"/>
@@ -116,20 +116,19 @@
 
                                                     <span class="control-label">收货地址</span>
                                                     <div class="cart-plus-minus">
-                                                        <sf:input path="address" class="address-box" type="text" name="address" style="width=200px;"required/>
+                                                        <sf:input path="address" class="address-box" type="text" name="address" style="width=200px;" required="required"/>
                                                     </div>
                                                     <br/>
 
                                                     <span class="control-label">收货人电话号码</span>
                                                     <div class="cart-plus-minus">
-                                                        <sf:input path="telephoneNumber" class="telephone-box" type="number" name="telephone" required/>
+                                                        <sf:input path="telephoneNumber" class="telephone-box" type="number" name="telephone" required="required"/>
                                                     </div>
                                                     <br/>
 
                                                     <span class="control-label">收货人姓名</span>
                                                     <div class="cart-plus-minus">
-                                                        <input class="name-box" type="text" name="address" value="" required>
-                                                        <sf:input path="address" class="name-box" type="text" name="address" required/>
+                                                        <sf:input path="address" class="name-box" type="text" name="address" required="required"/>
                                                     </div>
                                                 </div>
                                             </div>

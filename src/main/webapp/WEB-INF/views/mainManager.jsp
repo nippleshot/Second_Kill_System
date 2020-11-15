@@ -90,7 +90,7 @@
                                             <c:out value="${product.key.priceSpike}"/>
                                             <span><c:out value="${product.key.price}"/></span>
                                         </div>
-                                        <a class="add-to-cart" href="/order?userId=${managerId}&productId=${product.key.productId}">立即购买</a>
+                                        <a class="add-to-cart" href="/mxst/order.html?userId=${userId}&productId=${product.key.productId}">立即购买</a>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                         <div class="price">
                                             <c:out value="${product.key.price}"/>
                                         </div>
-                                        <a class="add-to-cart" href="/order?userId=${managerId}&productId=${product.key.productId}">立即购买</a>
+                                        <a class="add-to-cart">还没开始</a>
                                     </div>
                                 </div>
                             </div>
