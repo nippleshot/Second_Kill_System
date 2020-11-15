@@ -114,6 +114,14 @@ public class OrderController {
         String address = order.getAddress();
         Date date = new Date();
 
+        System.out.println("product_id : " +product_id);
+        System.out.println("num : " +num);
+        System.out.println("total_price : " +total_price);
+        System.out.println("consignee : " +consignee);
+        System.out.println("telephone : " +telephone);
+        System.out.println("address : " +address);
+        System.out.println("date : " +date.toString());
+
         int is_Create_Succ = orderService.createNewOrder(user_id, product_id, num, total_price, consignee, telephone, address, date);
 
         if(is_Create_Succ == OrderService.SUCCESS_CREATE_ORDER){

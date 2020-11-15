@@ -146,7 +146,7 @@ public class OrderDao {
     }
 
     public void payForOrder(int orderId) {
-        String sqlStr = "UPDATE SET is_paid=? WHERE order_id=?";
+        String sqlStr = "UPDATE t_order SET is_paid=? WHERE order_id=?";
         Object[] args = {true, orderId};
         jdbcTemplate.update(sqlStr, args);
     }

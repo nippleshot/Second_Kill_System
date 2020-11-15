@@ -87,8 +87,9 @@
                             <!--Order Area-->
                             <div class="col-md-6">
                                 <div class="single-product-content">
-                                        <sf:form method="POST" id="AddToCartForm" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data" action="/mxst/order.html?userId=${userId}" commandName="order">
-                                        <div class="product-details">
+                                        <sf:form method="post" commandName="order" id="AddToCartForm" class="shopify-product-form" action="/mxst/order.html?userId=${userId}">
+                                            <sf:input path="productId" type="hidden" value="${productId}"/>
+                                            <div class="product-details">
                                             <h1 class="single-product-name">${productName}</h1>
                                             <div class="product-sku">商品号: <span class="variant-sku">${productId}</span></div>
                                             <div class="single-product-price">
@@ -106,7 +107,7 @@
                                                 <div class="product-add-to-cart">
                                                     <span class="control-label">数量</span>
                                                     <div class="cart-plus-minus" style="float:left;">
-                                                        <sf:input path="num" class="cart-plus-minus-box" id="quantity" type="number" min="0" name="quantity" value="0" readonly="true" required="required"/>
+                                                        <sf:input path="num" class="cart-plus-minus-box" id="quantity" type="number" min="0" value="0" readonly="true" required="required"/>
                                                     </div>
                                                     <div>
                                                         <input type="button" value="+" style="background:#708090;color:white" onclick="cal_add()"/>
@@ -116,19 +117,19 @@
 
                                                     <span class="control-label">收货地址</span>
                                                     <div class="cart-plus-minus">
-                                                        <sf:input path="address" class="address-box" type="text" name="address" style="width=200px;" required="required"/>
+                                                        <sf:input path="address" class="address-box" type="text" style="width=200px;" required="required"/>
                                                     </div>
                                                     <br/>
 
                                                     <span class="control-label">收货人电话号码</span>
                                                     <div class="cart-plus-minus">
-                                                        <sf:input path="telephoneNumber" class="telephone-box" type="number" name="telephone" required="required"/>
+                                                        <sf:input path="telephoneNumber" class="telephone-box" type="number" required="required"/>
                                                     </div>
                                                     <br/>
 
                                                     <span class="control-label">收货人姓名</span>
                                                     <div class="cart-plus-minus">
-                                                        <sf:input path="address" class="name-box" type="text" name="address" required="required"/>
+                                                        <sf:input path="consignee" class="name-box" type="text" required="required"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,7 +137,7 @@
                                             <div class="single-product-price">
                                                 <div class="single-product-price row">
                                                     <div class="price col-xs-4" style="font-size:20px;font-weight:400;margin-left:15px">
-                                                        实付款 ： <input type="text" id="total-price" value="0.00" style="width:150px;color:#007bff" readonly/>
+                                                        实付款 ： <sf:input path="totalPrice" type="number" id="total-price" value="0.00" style="width:150px;color:#007bff" readonly="true"/>
                                                     </div>
 
                                                     <div class="col-xs-4" style="color:#f06666;margin-left:20px"> 剩下时间 </br> <span style="font-size:25px;font-weight:500" id="countdown">23:23:20</span> </div>
