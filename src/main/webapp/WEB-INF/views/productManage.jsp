@@ -84,7 +84,7 @@
                         <td>
                             <div class="product-image4">
                                 <a href="#">
-                                    <img class="pic-1" src="<c:out value="${productInfo.key.photo}"/>">
+                                    <img class="pic-1" src="<c:out value="${productInfo.key.photo}"/>" >
                                 </a>
                             </div>
                         </td>
@@ -125,7 +125,7 @@
                     <div class="row">
                         <sf:form method="POST" action="/msxt/product/list/add.html?managerId=${managerId}&managerName=${managerName}" commandName="productInfo">
                         <div class="col-md-12 product_content">
-                            <table class="table table-striped custab" style="width: 80%;">
+                            <table class="table table-striped custab" style="width: 100%;">
                                 <thead>
                                 <tr>
                                     <th> </th>
@@ -153,7 +153,7 @@
                                         商品简介
                                     </td>
                                     <td>
-                                        <sf:textarea path="description" cols="48" rows="8" required="required"/>
+                                        <sf:textarea path="description" cols="40" rows="8" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -228,7 +228,7 @@
 
                             <sf:input path="productId" type="hidden" id="product_id"/>
                         <div class="col-md-12 product_content">
-                            <table class="table table-striped custab" style="width: 80%;">
+                            <table class="table table-striped custab" style="width: 100%;">
                                 <thead>
                                 <tr>
                                     <th> </th>
@@ -256,7 +256,7 @@
                                         商品简介
                                     </td>
                                     <td>
-                                        <sf:textarea path="description" cols="48" rows="8" id="description" required="required"/>
+                                        <sf:textarea path="description" cols="40" rows="8" id="description" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>

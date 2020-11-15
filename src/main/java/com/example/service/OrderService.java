@@ -88,6 +88,13 @@ public class OrderService {
     }
 
     /**
+     * 查找指定用户的订单
+     */
+    public List<Order> findOrderByUserId(int userId) {
+        return orderDao.findOrderByUserId(userId);
+    }
+
+    /**
      * 获取全部订单
      */
     public List<Order> getAllOrder() {
