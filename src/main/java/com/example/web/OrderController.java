@@ -20,6 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -61,12 +66,24 @@ public class OrderController {
         double price = product_Info.getKey().getPrice();
         int stock = product_Info.getKey().getStock();
         double priceSpike = product_Info.getKey().getPriceSpike();
-        Date start_time = product_Info.getKey().getStartTime();
-        Date end_time = product_Info.getKey().getEndTime();
 
-        Date now = new Date();
+        LocalDateTime start_Time = Instant.ofEpochMilli( product_Info.getKey().getStartTime().getTime() )
+                .atZone( ZoneId.systemDefault() )
+                .toLocalDateTime();
+
+        LocalDateTime end_Time = Instant.ofEpochMilli( product_Info.getKey().getEndTime().getTime() )
+                .atZone( ZoneId.systemDefault() )
+                .toLocalDateTime();
+
+        LocalDateTime now = Instant.ofEpochMilli( new Date().getTime() )
+                .atZone( ZoneId.systemDefault() )
+                .toLocalDateTime();
+
+        //Period period = now.until(end_Time);
+
         if(is_Seckill_Start){
             Date time_Left = new Date();
+            SimpleDateFormat sdformat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 
             model.addAttribute("timeLeft", time_Left);
         }
@@ -137,5 +154,6 @@ public class OrderController {
         model.addAttribute("orders", orders);
         return "orderList";
     }
+
 
 }
