@@ -48,15 +48,6 @@ public class ProductController {
     @RequestMapping(value = "/list/add", method = RequestMethod.POST)
     public String add_Product(ProductInfo productInfo, HttpServletRequest request, RedirectAttributes redirect) {
 
-//        System.out.println("Name: "+productInfo.getProductName());
-//        System.out.println("Photo: "+productInfo.getPhoto());
-//        System.out.println("Description: "+productInfo.getDescription());
-//        System.out.println("Price: "+productInfo.getPrice());
-//        System.out.println("PriceSpike: "+productInfo.getPriceSpike());
-//        System.out.println("Stock: "+productInfo.getStock());
-//        System.out.println("StartTime: "+productInfo.getStartTime().toString());
-//        System.out.println("EndTime: "+productInfo.getEndTime().toString());
-
         LocalDateTime StartTime_local = productInfo.getStartTime();
         LocalDateTime EndTime_local = productInfo.getEndTime();
 

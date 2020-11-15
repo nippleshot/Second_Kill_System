@@ -48,7 +48,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="<c:url value="/product/list.html?managerId=${managerId}&managerName=${managerName}" />">商品管理</a>
-                <a class="dropdown-item" href="<c:url value="/order/list.html" />">订单管理</a>
+                <a class="dropdown-item" href="<c:url value="/order/list.html?managerId=${managerId}&managerName=${managerName}" />">订单管理</a>
                 <a class="dropdown-item" href="<c:url value="/main/list/manager.html?managerId=${managerId}&managerName=${managerName}" />">主页面</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
@@ -137,7 +137,7 @@
                                         图片（URL）
                                     </td>
                                     <td>
-                                        <sf:input path="photo" type="text"/>
+                                        <sf:input path="photo" type="text" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -145,7 +145,7 @@
                                         商品名
                                     </td>
                                     <td>
-                                        <sf:input path="productName" type="text"/>
+                                        <sf:input path="productName" type="text" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -153,7 +153,7 @@
                                         商品简介
                                     </td>
                                     <td>
-                                        <sf:textarea path="description" cols="48" rows="8"/>
+                                        <sf:textarea path="description" cols="48" rows="8" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -161,7 +161,7 @@
                                         秒杀开始
                                     </td>
                                     <td>
-                                        <sf:input path="startTime" type="datetime-local"/>
+                                        <sf:input path="startTime" type="datetime-local" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -169,7 +169,7 @@
                                         秒杀结束
                                     </td>
                                     <td>
-                                        <sf:input path="endTime" type="datetime-local"/>
+                                        <sf:input path="endTime" type="datetime-local" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -177,7 +177,7 @@
                                         原价
                                     </td>
                                     <td>
-                                        <sf:input path="price" type="number"/>
+                                        <sf:input path="price" type="number" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -185,7 +185,7 @@
                                         折扣价
                                     </td>
                                     <td>
-                                        <sf:input path="priceSpike" type="number"/>
+                                        <sf:input path="priceSpike" type="number" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -193,7 +193,7 @@
                                         存库量
                                     </td>
                                     <td>
-                                        <sf:input path="stock" type="number"/>
+                                        <sf:input path="stock" type="number" required="required"/>
                                     </td>
                                 </tr>
                             </table>
@@ -240,7 +240,7 @@
                                         图片(URL)
                                     </td>
                                     <td>
-                                        <sf:input path="photo" id="photo" type="text"/>
+                                        <sf:input path="photo" id="photo" type="text" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -248,7 +248,7 @@
                                         商品名
                                     </td>
                                     <td>
-                                        <sf:input path="productName" id="product_name" type="text"/>
+                                        <sf:input path="productName" id="product_name" type="text" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -256,7 +256,7 @@
                                         商品简介
                                     </td>
                                     <td>
-                                        <sf:textarea path="description" cols="48" rows="8" id="description"/>
+                                        <sf:textarea path="description" cols="48" rows="8" id="description" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -264,7 +264,7 @@
                                         秒杀开始
                                     </td>
                                     <td>
-                                        <sf:input path="startTime" type="datetime-local"/>
+                                        <sf:input path="startTime" type="datetime-local" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -272,7 +272,7 @@
                                         秒杀结束
                                     </td>
                                     <td>
-                                        <sf:input path="endTime" type="datetime-local"/>
+                                        <sf:input path="endTime" type="datetime-local" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -280,7 +280,7 @@
                                         原价
                                     </td>
                                     <td>
-                                        <sf:input path="price" type="number" id="price_original"/>
+                                        <sf:input path="price" type="number" id="price_original" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -288,7 +288,7 @@
                                         折扣价
                                     </td>
                                     <td>
-                                        <sf:input path="priceSpike" type="number" id="price_sale"/>
+                                        <sf:input path="priceSpike" type="number" id="price_sale" required="required"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -296,7 +296,7 @@
                                         存库量
                                     </td>
                                     <td>
-                                        <sf:input path="stock" type="number" id="stock"/>
+                                        <sf:input path="stock" type="number" id="stock" required="required"/>
                                     </td>
                                 </tr>
                             </table>

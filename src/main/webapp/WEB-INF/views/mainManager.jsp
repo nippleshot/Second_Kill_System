@@ -48,7 +48,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="<c:url value="/product/list.html?managerId=${managerId}&managerName=${managerName}" />">商品管理</a>
-                <a class="dropdown-item" href="<c:url value="/order/list.html" />">订单管理</a>
+                <a class="dropdown-item" href="<c:url value="/order/list.html?managerId=${managerId}&managerName=${managerName}" />">订单管理</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
         </div>

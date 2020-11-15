@@ -48,7 +48,7 @@
             </button>
             <div class="dropdown-menu">
                 <a class="dropdown-item" href="<c:url value="/product/list.html?managerId=${managerId}&managerName=${managerName}" />">商品管理</a>
-                <a class="dropdown-item" href='<c:url value="/order/list.html" />'>订单管理</a>
+                <a class="dropdown-item" href='<c:url value="/order/list.html?managerId=${managerId}&managerName=${managerName}" />'>订单管理</a>
                 <a class="dropdown-item" href="<c:url value="/main/list/manager.html?managerId=${managerId}&managerName=${managerName}" />">主页面</a>
                 <a class="dropdown-item" href="<c:url value="/main/list.html" />">退出</a>
             </div>
@@ -71,11 +71,13 @@
                                 <div class="col-lg-12">
                                     <div class="row">
                                         <sf:form method="POST">
+                                            <input type="hidden" class="form-control search-slt" name="managerId" value="${managerId}">
+                                            <input type="hidden" class="form-control search-slt" name="managerName" value="${managerName}">
                                             <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                                                <input type="text" class="form-control search-slt" name="userId" placeholder="用户编号">
+                                                <input type="text" class="form-control search-slt" name="userId" placeholder="用户编号" required="required">
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-12 p-0">
-                                                <input type="text" class="form-control search-slt" name="productId" placeholder="商品编号">
+                                                <input type="text" class="form-control search-slt" name="productId" placeholder="商品编号" required="required">
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                                                 <button type="submit" class="btn btn-danger wrn-btn">搜索</button>

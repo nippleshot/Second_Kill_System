@@ -131,6 +131,10 @@ public class OrderController {
                 // PAYMENT_ERROR
                 redirect.addAttribute("msg", PAYMENT_ERROR);
                 return "redirect:/order.html?userId="+user_id+"&productId="+product_id;
+            }else if(is_Payment_Succ == OrderService.STOCK_NOT_ADEQUATE){
+                // PRODUCT_STOCK_ERROR
+                redirect.addAttribute("msg",  PRODUCT_STOCK_ERROR);
+                return "redirect:/order.html?userId="+user_id+"&productId="+product_id;
             }else{
                 // SUCCESS_MSG
                 User user = userService.findUserByUserId(user_id);
@@ -149,9 +153,12 @@ public class OrderController {
 
     // Only Manager can use this function
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String show_Order_List(Model model) {
+    public String show_Order_List(HttpServletRequest request, Model model) {
         List<Order> orders = orderService.findAllOrder();
         model.addAttribute("orders", orders);
+        model.addAttribute("managerId", request.getParameter("managerId"));
+        model.addAttribute("managerName", request.getParameter("managerName"));
+
         return "orderList";
     }
 
@@ -160,6 +167,9 @@ public class OrderController {
         List<Order> orders = orderService.findOrderByUserIdAndProductId(Integer.parseInt(request.getParameter("userId")),
                 Integer.parseInt(request.getParameter("productId")));
         model.addAttribute("orders", orders);
+
+        model.addAttribute("managerId", request.getParameter("managerId"));
+        model.addAttribute("managerName", request.getParameter("managerName"));
         return "orderList";
     }
 
