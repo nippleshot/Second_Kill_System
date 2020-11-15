@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -31,25 +32,32 @@ public class UserDao {
     public User findUserByUserName(String userName) {
         String sqlStr = " SELECT * "
                 + " FROM t_user WHERE user_name=?";
-
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userName}, (resultSet, i) -> {
-            User user=new User(resultSet.getString("user_name"), resultSet.getString("password"));
-            user.setPrivilege(resultSet.getInt("privilege"));
-            user.setBalance(resultSet.getDouble("balance"));
-            user.setUserId(resultSet.getInt("user_id"));
-            return user;
-        });
+        try {
+            return jdbcTemplate.queryForObject(sqlStr, new Object[]{userName}, (resultSet, i) -> {
+                User user = new User(resultSet.getString("user_name"), resultSet.getString("password"));
+                user.setPrivilege(resultSet.getInt("privilege"));
+                user.setBalance(resultSet.getDouble("balance"));
+                user.setUserId(resultSet.getInt("user_id"));
+                return user;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public User findUserById(int userId) {
         String sqlStr = "SELECT * FROM t_user WHERE user_id=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId}, (resultSet, i) -> {
-            User user=new User(resultSet.getString("user_name"), resultSet.getString("password"));
-            user.setPrivilege(resultSet.getInt("privilege"));
-            user.setBalance(resultSet.getDouble("balance"));
-            user.setUserId(resultSet.getInt("user_id"));
-            return user;
-        });
+        try {
+            return jdbcTemplate.queryForObject(sqlStr, new Object[]{userId}, (resultSet, i) -> {
+                User user = new User(resultSet.getString("user_name"), resultSet.getString("password"));
+                user.setPrivilege(resultSet.getInt("privilege"));
+                user.setBalance(resultSet.getDouble("balance"));
+                user.setUserId(resultSet.getInt("user_id"));
+                return user;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public void insertUser(User user) {

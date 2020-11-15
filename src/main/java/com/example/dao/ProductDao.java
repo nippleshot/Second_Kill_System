@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.example.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -18,18 +19,22 @@ public class ProductDao {
 
     public Product findProduct(int productId) {
         String sqlStr = "SELECT * FROM t_product WHERE product_id=?";
-        return jdbcTemplate.queryForObject(sqlStr, new Object[]{productId}, (resultSet, i) -> {
-            Product product = new Product(resultSet.getString("product_name"),
-                    resultSet.getString("photo"),
-                    resultSet.getString("description"),
-                    resultSet.getDouble("price"),
-                    resultSet.getInt("stock"),
-                    resultSet.getDouble("price_spike"),
-                    resultSet.getTimestamp("start_time"),
-                    resultSet.getTimestamp("end_time"));
-            product.setProductId(resultSet.getInt("product_id"));
-            return product;
-        });
+        try {
+            return jdbcTemplate.queryForObject(sqlStr, new Object[]{productId}, (resultSet, i) -> {
+                Product temp = new Product(resultSet.getString("product_name"),
+                        resultSet.getString("photo"),
+                        resultSet.getString("description"),
+                        resultSet.getDouble("price"),
+                        resultSet.getInt("stock"),
+                        resultSet.getDouble("price_spike"),
+                        resultSet.getTimestamp("start_time"),
+                        resultSet.getTimestamp("end_time"));
+                temp.setProductId(resultSet.getInt("product_id"));
+                return temp;
+            });
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<Product> getAllProduct() {
