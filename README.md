@@ -60,7 +60,8 @@
 [5] Enjoy *(끄읕ㅎ)*
 
 
-#### 아쉬웠던 점:
+---------------------------------------
+#### ps.아쉬웠던 점:
 사용자가 직접 Main page를 다시 reload를 하지않아도 현재 [구매 불가능] 버튼이 second kill sale 시간이 딱 되면 바로 [구매하기] 버튼으로 스스로 변할 수 있게 
 대략 5초 간격으로 javascript를 지속적으로 reload해주는 server가 있어야되는데 구현하지 못했다.
 <img width="940" alt="wenti" src="https://user-images.githubusercontent.com/44460142/99253253-c5bfa580-2853-11eb-88e8-5d1148baaa7c.png" style="zoom: 25%;">
