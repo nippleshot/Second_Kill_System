@@ -69,3 +69,6 @@
 그냥 Main page에다 setTimeout("location.reload()",5000)를 적용해볼까도 생각해봤지만
 매번 reload될때 마다 Main page상단으로 계속 올라가게되 지속적으로 scroll down하면서 웹페이지를 보는데 방해가 될꺼같아 적용하지 않았다.
 
+#### 秒杀系统参考 ：
+https://blog.csdn.net/u014231523/category_8109361.html
+
