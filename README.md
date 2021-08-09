@@ -47,17 +47,16 @@
 
 
 
-#### 《怎么🏃‍♂️🏃‍♀️？》 *(실행방법)*：
+#### 《怎么🏃‍♂️🏃‍♀️？》：
 
-[1] applicationContext.xml里改本地数据库密码 *(applicationContext.xml에 local DB에 맞게로 수정하고)*
+[1] applicationContext.xml里改本地数据库密码 *(applicationContext.xml에 local DB에 맞게로 수정)*
 
-[2] 运行mysql query (exampled.sql) *(exampled.sql local DB에 먼저 실행해서 DB 생성한 다음)*
+[2] 运行mysql query (exampled.sql) *(exampled.sql local DB에 먼저 실행해서 DB 생성)*
 
-[3] 点击jetty:run *(jetty:run 누르면)*
+[3] 点击jetty:run
 
 [4] url : http://localhost:8088/msxt/
 
-[5] Enjoy *(끄읕ㅎ)*
 
 
 ---------------------------------------
