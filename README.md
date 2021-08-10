@@ -1,4 +1,4 @@
-## 电商秒杀系统 (Second Kill System)
+## 电商秒杀系统 (Flash Sale System)
 
 ### 《主页面》
 
